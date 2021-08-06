@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bienvenido</title>
+</head>
+<body>
+	<div th:replace="fragments/monicovidHeader :: header"></div>
+
+	<div class="container">
+		<h2 class="letra-rosa" align="center">¡BIENVENIDO A MONICOVID!</h2>
+		<br>
+		<div class="recomendaciones-generales">
+			<h3 class="letra-rosa">Recomendaciones generales</h3>
+			<br>
+			<div class="seccion letra-celeste">
+				<h4>¿Cada cuánto tiempo debo monitorearme?</h4>
+				<br>
+				<p>Te recomendamos monitorearte cada 8 horas para mantener un control adecuado de sus parámetros.</p>
+				<p>Por ejemplo, puedes monitorearte a las 7 am., luego a las 3 pm. y finalmente a las 11pm.</p>
+			</div>
+			<br>
+			<br>
+			<div class="seccion letra-celeste">
+				<h4>¿Dónde acudir?</h4>
+				<br>
+				<p>Llama al 113 o dirígete a un establecimiento que cuente con punto COVID.</p>
+				<p>Actualmente también hay Centros de Aislamiento Temporal y Seguimiento (CATS) en todas las regiones del país.</p>
+			</div>
+			<br>
+			<br>
+			<p class="seccion letra-celeste seccion-info">Si deseas conocer más información haz clic <a href="https://www.gob.pe/8733-cuidar-a-un-paciente-sospechoso-de-haber-contraido-coronavirus-covid-19" class="letra-rosa">aquí</a></p>
+			
+		
+			<br>
+			<br>
+			<div class="letra-celeste seccion" style="font-size: 20px;">
+				<h4>¿Ya te recuperaste de tu enfermedad?</h4>
+			</div>
+			<br>
+			<div class="botones btn-recuperado seccion">
+				<button
+				id="add-row" type="button" class="btn btn-primary btn-md left-block"
+				data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+					<span class="glyphicon glyphicon-plus">Ya estoy recuperado</span>
+				</button>
+			</div>
+		</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content contenedor-modal-externo">
+				<div class="contenedor-modal-interno">
+				<br>
+                <div class="modal-header modal-center">
+                  <span class="modal-title" id="exampleModalLabel"><i class="fas fa-smile-beam letra-celeste icono-alerta"></i></span>
+                </div>
+				<br>
+                <div class="modal-body">
+                    <form th:action="@{/usuario/recuperado}" method="post"
+					th:object="${usuario}">
+                        <div class="form-group" style="display:none;">
+							<label for="id">ID:</label> 
+							<input type="text" th:field="*{id}" readonly="readonly"
+							class="form-control" id="id"></input>
+						</div>
+						<br>
+						<div class="modal-flex">
+							<span class="letra-celeste alerta-recuperado modal-center">¡Nos alegramos por ti y no olvides seguir cuidándote!</span>
+						</div>
+						<br>
+						<div class="form-group" style="display:none;">
+							<input type="text"	th:field="*{recuperado}"
+							class="form-control" id="recuperado"></input>
+							<div class="alert alert-danger" 
+							th:if="${#fields.hasErrors('recuperado')}"
+							th:errors="*{recuperado}"></div>
+						</div>
+						
+						<br>
+						<div class="botones">
+							<button type ="submit" class="btn btn-primary btn-alerta">Aceptar</button>
+							<a data-bs-dismiss="modal" aria-label="Close" class="cancelar btn-alerta">Cancelar</a>
+						</div>
+						<br>
+					</form>
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" id="btn-guardar">Crear</button>
+                </div> -->
+				</div>
+              </div>
+            </div>
+          </div>
+	</div>	
+	<div th:replace="fragments/monicovidFooter :: footer"></div>
+		
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
