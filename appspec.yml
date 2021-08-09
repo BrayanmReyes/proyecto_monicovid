@@ -1,12 +1,20 @@
-version: 0.0
+    version: 0.0
 os: linux
 files:
   - source: /
     destination: /root/destination/directory
 hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
   ApplicationStop:
     - location: scripts/deregister_from_elb.sh
     - location: scripts/stop_httpd.sh
+      timeout: 300
+      runas: root
   ApplicationStart:
     - location: scripts/start_httpd.sh
     - location: scripts/register_with_elb.sh
+      timeout: 300
+      runas: root
