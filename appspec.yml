@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: .
-    destination: /home/ec2-user/spring-boot-monicovid/
+    destination: /home/ec2-user/proyecto_monicovid/
 hooks:
   AfterInstall:
    - location: scripts/setup.sh
