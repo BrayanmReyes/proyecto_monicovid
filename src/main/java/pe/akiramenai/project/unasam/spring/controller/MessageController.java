@@ -124,8 +124,8 @@ public class MessageController {
     			 parametersList.add(new BasicNameValuePair("cmd", "sendsms"));
     			 //domainId solo es necesario si el login no es un email
     			 //parametersList.add(new BasicNameValuePair("domainId", "XX"));
-    			 parametersList.add(new BasicNameValuePair("login", "monicovid.no.reply@gmail.com"));
-    			 parametersList.add(new BasicNameValuePair("passwd", "pbdncegy"));
+    			 parametersList.add(new BasicNameValuePair("login", "upc201711943@gmail.com"));
+    			 parametersList.add(new BasicNameValuePair("passwd", "hbx7pucy"));
     			 
     			 listContactos.forEach((contacto)->{
     				 parametersList.add(new BasicNameValuePair("dest", contacto.getNumero()));
