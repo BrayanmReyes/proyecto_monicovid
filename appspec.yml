@@ -20,8 +20,3 @@ hooks:
     - location: scripts/start.sh
       timeout: 60
       runas: ec2-user
-  # Health check after start spirngboot server
-  ValidateService:
-    - location: scripts/health.sh
-      timeout: 60
-      runas: ec2-user
