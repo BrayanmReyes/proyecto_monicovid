@@ -1,0 +1,59 @@
+language: java
+jdk:
+  - openjdk8
+
+branches:
+  only:
+    - main
+
+# BUILD: Github to TravisCI
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+
+script: "./gradlew clean build"
+
+# PRE-DEPLOY
+before_deploy:
+  - mkdir -p before-deploy
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cp build/libs/*.jar before-deploy/
+  - cd before-deploy && zip -r proyecto-monicovid.zip *
+  - cd ../ && mkdir -p deploy
+  - mv before-deploy/proyecto-monicovid.zip deploy/
+
+# DEPLOY: TravisCI to AWS
+deploy:
+  # TravisCI to S3
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: build-proyecto-monicovid
+    region: us-east-2
+    acl: private
+    local_dir: deploy
+    skip_cleanup: true
+    wait-until-deployed: true
+    on:
+      all_branches: true
+  # S3 to EC2
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: bucket-demo-monicovid
+    key: proyecto-monicovid.zip # Build file
+    bundle_type: zip
+    application: MoniCovid # Codedeploy app
+    deployment_group: development_group # Codedeploy group
+    region: us-east-2
+    wait_until_deployed: true
+    on:
+      all_branches: true
+
+# NOTIFICATION
+notifications:
+  email:
+    recipients:
+      - 'upc201711943@gmail.com'
