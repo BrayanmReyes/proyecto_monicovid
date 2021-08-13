@@ -72,55 +72,5 @@ public class DireccionController {
 			
 		return "logout";
 	} 
-	
-	
-	
-	
-	/*......................................................................................*/
-	@RequestMapping("/prueba")
-	public String prueba() {
 		
-		return "pagprincipal";
-	}
-	
-	@RequestMapping("/bienvenidoAlumno")
-	public String irBienvenidoAlumno() {
-		
-		return "bienvenidoAlumno";
-	}
-	@RequestMapping("/bienvenidoProfesor")
-	public String irBienvenidoProfesor() {
-		
-		return "bienvenidoProfesor";
-	}
-	
-	@RequestMapping("/eleccion")
-	public String irEleccion() {
-		
-		return "eleccion";
-	}
-
-	@RequestMapping("/logoutAlumno")
-	 public String irLogOutAlumno() {
-			
-			return "logoutAlumno";
-		} 
-	@RequestMapping("/logoutProfesor")
-	 public String irLogOutProfesor() {
-			
-			return "logoutProfesor";
-		} 
-	@RequestMapping("/loginAlumno")
-	 public String irLoginAlumno() {
-			
-			return "logoutAlumno";
-		} 
-	@RequestMapping("/loginProfesor")
-	 public String irLoginProfesor() {
-			
-			return "loginProfesor";
-		} 
-
-
-	
 }
