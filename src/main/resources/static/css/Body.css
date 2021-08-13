@@ -808,3 +808,19 @@ input[type=range]::-ms-track {
         font-size: 64px; 
     }
 }
+
+/*pwd*/
+.btn-warning-pwd{
+    background-color: #fff3cd;
+    border: 0px;
+    font-size: 20px;
+    color: #664d03;
+    font-weight: bolder;
+    margin: 0 1%;
+}
+
+.modificar-pwd{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

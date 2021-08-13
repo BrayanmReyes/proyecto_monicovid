@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -23,21 +21,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.akiramenai.project.unasam.spring.mail.HttpJavaAltiria;
-import pe.akiramenai.project.unasam.spring.mail.MailSend;
 import pe.akiramenai.project.unasam.spring.model.Contacto;
 import pe.akiramenai.project.unasam.spring.model.Usuario;
 import pe.akiramenai.project.unasam.spring.service.IContactoService;
-import pe.akiramenai.project.unasam.spring.service.IReporteService;
 import pe.akiramenai.project.unasam.spring.service.ISesionService;
 import pe.akiramenai.project.unasam.spring.service.ITemperaturaService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
@@ -57,9 +49,6 @@ public class MessageController {
 	
 	@Autowired
 	private ISesionService sService;
-	
-	@Autowired
-	private IReporteService rService;
 	
 	@RequestMapping("/prueba")
 	public static void SMS(String[] args) {

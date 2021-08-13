@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import pe.akiramenai.project.unasam.spring.model.Oxigeno;
-import pe.akiramenai.project.unasam.spring.model.Temperatura;
 import pe.akiramenai.project.unasam.spring.repository.IOxigenoDAO;
 import pe.akiramenai.project.unasam.spring.service.IOxigenoService;
 import pe.akiramenai.project.unasam.spring.util.mathResources;

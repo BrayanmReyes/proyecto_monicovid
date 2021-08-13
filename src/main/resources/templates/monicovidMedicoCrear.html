@@ -5,24 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Crear Cuenta Medico</title>
 	<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
-	<!-- Script para mostrar las coordenadas-->
-	<script type="text/javascript">
-		if (navigator.geolocation) { //Validar si hay acceso web a la ubicación
-			navigator.geolocation.getCurrentPosition(mostrarUbicacion); //Obtiene la posición
-			} else {
-			alert("¡Error! Este navegador no soporta la Geolocalización.");
-		}
-		
-		//Funcion para obtener latitud y longitud
-		function mostrarUbicacion(position) {
-			var latitud = position.coords.latitude; //Obtener latitud
-			var longitud = position.coords.longitude; //Obtener longitud
-			var div = document.getElementById("coordenadas");
-			div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
-			var txt = document.getElementById("direccion");
-			txt.value=latitud + "," + longitud;
-		}
-	</script>		
 </head>
 <body>
 	
@@ -50,7 +32,7 @@
 				<div class="form-group">
 					<label for="dni">DNI:</label> 
 					<input type="text"	th:field="*{dni}"
-					class="form-control" id="dni" maxlength="10"></input>
+					class="form-control" id="dni" maxlength="8"></input>
 					<div class="alert alert-danger" 
 					th:if="${#fields.hasErrors('dni')}"
 					th:errors="*{dni}"></div>
@@ -140,6 +122,38 @@
 			<br>
 		</form>
 	</div>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<!-- Script para mostrar las coordenadas-->
+	<script type="text/javascript">
+		window.onload = function() {
+			
+			if (navigator.geolocation) { //Validar si hay acceso web a la ubicación
+				navigator.geolocation.getCurrentPosition(function mostrarUbicacion(position){
+					var latitud = position.coords.latitude; //Obtener latitud
+					var longitud = position.coords.longitude; //Obtener longitud
+					var div = document.getElementById("coordenadas");
+					div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
+					var txt = document.getElementById("direccion");
+					txt.value=latitud + "," + longitud;
+				}, function error(positionError){
+					switch (positionError.code)
+					{
+						case positionError.PERMISSION_DENIED:
+							alert("No se ha permitido el acceso a la posición del usuario");
+						break;
+						case positionError.POSITION_UNAVAILABLE:
+							alert("No se ha podido acceder a la información de su posición.");
+						break;
+						case positionError.TIMEOUT:
+							alert("El servicio ha tardado demasiado tiempo en responder.");
+						break;
+						default:
+							alert("Error desconocido.");
+					}
+				});//Obtiene la posición
+			}
+		}
+	</script>	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
 </html>
