@@ -1,10 +1,12 @@
 package pe.akiramenai.project.unasam.spring.controller;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import javax.validation.Valid;
 
@@ -70,7 +72,11 @@ public class SintomaController {
 	{	
 		Usuario usuario= eService.buscarPorUserName(eService.obtenerUsuario());
 		Sintoma sintoma=new Sintoma();
-		Date dateActual=new Date();
+		TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
+		Calendar ahoraUTC = Calendar.getInstance(AmericaLima);
+		
+		Date dateActual=ahoraUTC.getTime();
+
 		sintoma.setFechaRegistro(dateActual);
 		sintoma.setPaciente(usuario);
 				

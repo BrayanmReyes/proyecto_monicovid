@@ -1,9 +1,11 @@
 package pe.akiramenai.project.unasam.spring.controller;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -62,7 +64,11 @@ public class OxigenoController {
 	{	
 		Usuario usuario= eService.buscarPorUserName(eService.obtenerUsuario());
 		Oxigeno oxigeno=new Oxigeno();
-		Date dateActual=new Date();
+		TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
+		Calendar ahoraUTC = Calendar.getInstance(AmericaLima);
+		
+		Date dateActual=ahoraUTC.getTime();
+
 		oxigeno.setFechaRegistro(dateActual);
 		oxigeno.setPaciente(usuario);
 		

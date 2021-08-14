@@ -52,7 +52,7 @@ public class Usuario implements Serializable{
 	
 	@Column(name="numero", nullable=true)
 	@Size(min=9,message="El número de celular debe tener 9 dígitos")
-	@Digits(fraction = 0, integer = 9, message="El número de celular no debe contener letras ni caracteres especiales")
+	@Digits(fraction = 0, integer = 11, message="El número de celular no debe contener letras ni caracteres especiales")
 	private String numero;
 	
 	public String getNumero() {

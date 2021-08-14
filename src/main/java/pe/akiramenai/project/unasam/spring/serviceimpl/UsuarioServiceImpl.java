@@ -33,6 +33,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		aMayusculas(Usuario);
 		Usuario.setPassword(passwordEncoder.encode(Usuario.getPassword()));
 		Usuario.setEmail(Usuario.getUsername());
+		Usuario.setNumero("51"+ Usuario.getNumero());
 		Usuario objUsuario=dUsuario.save(Usuario);
 		
 		
@@ -55,6 +56,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 			if(confirmarPassword(Usuario)) {
 			aMayusculas(Usuario);
 			Usuario.setPassword(passwordEncoder.encode(Usuario.getPassword()));
+			Usuario.setNumero("51"+ Usuario.getNumero());
 			dUsuario.save(Usuario);
 			flag=true;}
 			else 

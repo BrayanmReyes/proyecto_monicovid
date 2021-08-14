@@ -39,8 +39,8 @@
 								<td align="center" th:text="${p.nombre}"></td>
 								<td align="center" th:text="${p.numero}"></td>
 								<td align="center">
-									<a type="button" class="btn btn-warning celeste" th:href="@{'/contacto/modificar/'+ ${p.idContacto}}"><i class= "fas fa-edit"></i></a>
-									<a type="button" class="btn btn-danger" th:href="@{/contacto/eliminar?id=} + ${p.idContacto}"><i class= "fas fa-trash-alt"></i></a>
+									<a type="button" class="btn btn-warning celeste" th:href="@{'/contacto/modificar/'+ ${p.idContacto}}"><i class= "fas fa-edit"></i>	Editar</a>
+									<a type="button" class="btn btn-danger" th:href="@{/contacto/eliminar?id=} + ${p.idContacto}"><i class= "fas fa-trash-alt"></i>	Eliminar</a>
 								</td>
 								<!-- <td align="center"><a type="button" class="btn btn-warning" th:href="@{'/contacto/alertar/'+ ${p.idContacto}}"><i class= "fas fa-edit"></i>	Alertar</a></td> -->
 							</tr>

@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 //import javax.persistence.Temporal;
 //import javax.persistence.TemporalType;
 //import org.springframework.format.annotation.DateTimeFormat;
@@ -34,12 +35,14 @@ public class Contacto implements Serializable{
 	private Usuario paciente;
 	
 	@Column(name="nombre", nullable=false)
+	@NotBlank(message="No puede estar vacío")
 	@Pattern(regexp =  "[^0-9]*", message = "Este campo no debe contener números")
 	private String nombre;
 	
 	@Column(name="numero", nullable=false)
-	@Size(min=9,message="El numero debe tener 9 dígitos")
-	@Digits(fraction = 0, integer = 9, message="El número de celular no debe contener letras ni caracteres especiales")
+	@NotBlank(message="No puede estar vacío")
+	@Size(min=9,message="El número debe tener 9 dígitos")
+	@Digits(fraction = 0, integer = 11, message="El número de celular no debe contener letras ni caracteres especiales")
 	private String numero;
 
 	public Contacto() {

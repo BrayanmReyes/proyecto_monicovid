@@ -1,9 +1,11 @@
 package pe.akiramenai.project.unasam.spring.controller;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import javax.validation.Valid;
 
@@ -65,7 +67,11 @@ public class TemperaturaController {
 		Temperatura temperatura=new Temperatura();
 		Usuario usuario= eService.buscarPorUserName(eService.obtenerUsuario());
 		//Usuario usuario= eService.getUsuario();
-		Date dateActual=new Date();
+		
+		TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
+		Calendar ahoraUTC = Calendar.getInstance(AmericaLima);
+		
+		Date dateActual=ahoraUTC.getTime();
 		temperatura.setFechaRegistro(dateActual);
 		temperatura.setPaciente(usuario);
 		Double valor = 36.5;
