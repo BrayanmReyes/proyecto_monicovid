@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pe.akiramenai.project.unasam.spring.model.Sesion;
 import pe.akiramenai.project.unasam.spring.model.Usuario;
 import pe.akiramenai.project.unasam.spring.service.ISesionService;
+import pe.akiramenai.project.unasam.spring.service.IUploadPathService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
 
 
@@ -130,25 +131,33 @@ public class SesionController {
 		return "listSesions";
 	}
 	@RequestMapping("/recuperar")
-	public String recuperar(@ModelAttribute @Valid Sesion objSesion,  Model model)
-	throws ParseException
+	public String recuperar(@ModelAttribute @Valid Sesion objSesion, BindingResult binRes, Model model)
+			throws ParseException
 	{
-		boolean flag=false;
-		int usuario=sService.elegirUsuarioRecuperar(objSesion.getEmailSesion());			
-		if(usuario>0){
-			
-		if(sService.sendMail(objSesion.getEmailSesion()))
-					flag=true;
-				if(flag)
-					return "redirect:/login";
-				else {
-					model.addAttribute("mensaje", "Ocurrió un error");
-					return "redirect:/monicovid/recuperarContrasenia";
-					}			
+		if(binRes.hasErrors()) {
+			model.addAttribute("ciclos", uService.listarCiclos(1980,2999));
+			return "recuperarContrasenia";
+		
 		}
-		else
-			return "redirect:/monicovid/recuperarContrasenia";
-	}
+		else {
+				boolean flag=false;
+				int usuario=sService.elegirUsuarioRecuperar(objSesion.getEmailSesion());			
+				if(usuario>0){
+					flag = sService.sendMail(objSesion.getEmailSesion());
+						if(flag)
+							return "redirect:/login";
+						else {
+							model.addAttribute("mensaje", "Ocurrió un error");
+							return "recuperarContrasenia";
+							}			
+				}
+				else {
+					model.addAttribute("mensaje", "El correo no se encuentra registrado");
+					return "recuperarContrasenia";
+				}							
+			}		
+	}	
+	
 	
 	@RequestMapping("/irModificarContrasenia")
 	public String irModificarContraseña(Model model,RedirectAttributes objRedir)
@@ -156,7 +165,7 @@ public class SesionController {
 		if(mensaje!=null)
 		if(!mensaje.equalsIgnoreCase(""))
 			objRedir.addFlashAttribute("errormessage", mensaje);
-		model.addAttribute("usuario", uService.getUsuario());
+		model.addAttribute("usuario", uService.obtenerObjetoUsuario());
 		return "modificarContraseña";
 	}
 	
@@ -170,20 +179,19 @@ public class SesionController {
 		}
 		else {
 				if(objUsuario.getPassword().equalsIgnoreCase(objUsuario.getConfirmPassword())) {
-					uService.getUsuario().setPassword(objUsuario.getPassword());
+					uService.obtenerObjetoUsuario().setPassword(objUsuario.getPassword());
+					uService.obtenerObjetoUsuario().setConfirmPassword(objUsuario.getConfirmPassword());
 					
-				
-					
-				boolean flag=uService.modificarNuevaPassword(uService.getUsuario());
-				if(flag) {
-					dir.setMensaje("Se cambió la contraseña correctamente");
-					return "redirect:/monicovid/index";}
-				else {
-					mensaje="Ocurrió un error";
-					objRedir.addFlashAttribute("errormessage", mensaje);
-					return "redirect:/sesion/irModificarContrasenia";
-
-				}
+					boolean flag=uService.modificarNuevaPassword(uService.obtenerObjetoUsuario());
+					if(flag) {
+						dir.setMensaje("Se cambió la contraseña correctamente");
+						return "redirect:/monicovid/index";}
+					else {
+						mensaje="Ocurrió un error";
+						objRedir.addFlashAttribute("errormessage", mensaje);
+						return "redirect:/sesion/irModificarContrasenia";
+	
+					}
 
 				}
 				else {

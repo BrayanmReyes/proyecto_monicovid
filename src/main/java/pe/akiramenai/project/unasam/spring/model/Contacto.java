@@ -12,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 //import javax.persistence.Temporal;
 //import javax.persistence.TemporalType;
 //import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Contacto")
@@ -31,9 +34,12 @@ public class Contacto implements Serializable{
 	private Usuario paciente;
 	
 	@Column(name="nombre", nullable=false)
+	@Pattern(regexp =  "[^0-9]*", message = "Este campo no debe contener números")
 	private String nombre;
 	
 	@Column(name="numero", nullable=false)
+	@Size(min=9,message="El numero debe tener 9 dígitos")
+	@Digits(fraction = 0, integer = 9, message="El número de celular no debe contener letras ni caracteres especiales")
 	private String numero;
 
 	public Contacto() {

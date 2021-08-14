@@ -83,14 +83,15 @@ public class SesionServiceImpl implements ISesionService{
 	
 	@Override
 	@Transactional
-	public boolean sendMail(String emailSesion) {
+	public boolean sendMail(String username) {
 		boolean flag=false;
 		String password = crearPassword(8);
-		List<Usuario> user =sUsuario.buscarEmailUsuario(emailSesion);
-		
-		user.get(0).setPassword(password);
-		sUsuario.modificarNuevaPassword(user.get(0));
-		flag=MailSend.enviarMail(emailSesion,"Nueva Contraseña", "Hola "+ user.get(0).getNombre() +", tu nueva contraseña es " + password);
+		Usuario user =sUsuario.buscarPorUserName(username.toUpperCase());
+		user.setEmail(username.toUpperCase());
+		user.setPassword(password);
+		user.setConfirmPassword(password);
+		flag=sUsuario.modificarNuevaPassword(user);
+		flag=MailSend.enviarMail(username,"Nueva Contraseña", "Hola "+ user.getNombre() +", tu nueva contraseña es " + password);
 		return flag;
 	}
 

@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -30,22 +32,27 @@ public class Usuario implements Serializable{
 	
 	@Column
 	@NotBlank(message="No puede estar vacío")
+	@Pattern(regexp =  "[^0-9]*", message = "Este campo no debe contener números")
 	private String nombre;
 	
 	@Column
 	@NotBlank(message="No puede estar vacío")
+	@Pattern(regexp =  "[^0-9]*", message = "Este campo no debe contener números")
 	private String apellido;
 	
 	@Column(unique = true)
 	@NotBlank(message="No puede estar vacío")
-	@Size(min=8,message="El dni debe tener 8 caracteres")
+	@Size(min=8,message="El DNI debe tener 8 dígitos")
+	@Digits(fraction = 0, integer = 9, message="El DNI no debe contener letras ni caracteres especiales")
 	private String dni;
 	
 	@Column
-	@Email(message="Coloque un correo electrónico válido")
+	//@Email(message="Coloque un correo electrónico válido")
 	private String email;
 	
 	@Column(name="numero", nullable=true)
+	@Size(min=9,message="El número de celular debe tener 9 dígitos")
+	@Digits(fraction = 0, integer = 9, message="El número de celular no debe contener letras ni caracteres especiales")
 	private String numero;
 	
 	public String getNumero() {
@@ -60,8 +67,9 @@ public class Usuario implements Serializable{
 	private String direccion;
 	
 	@Column(unique = true)
-	@Email(message="Coloque un correo electrónico válido")
+	//@Email(message="Coloque un correo electrónico válido")
 	@NotBlank(message="No puede estar vacío")
+	@Pattern(regexp = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+", message = "Coloque un correo electrónico válido")
 	private String username;
 
 	@Column
@@ -69,6 +77,7 @@ public class Usuario implements Serializable{
 	private String password;
 
 	@Transient
+	@NotBlank(message="No puede estar vacío")
 	private String confirmPassword;
 	
 	@Column(name="comorbilidad", nullable=true)

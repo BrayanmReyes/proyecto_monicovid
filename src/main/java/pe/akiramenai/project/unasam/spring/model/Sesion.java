@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="Sesion")
@@ -20,8 +21,8 @@ public class Sesion implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idSesion;
 	
-	@Email
 	@Column(name="emailSesion", nullable=true)
+	@Pattern(regexp = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+", message = "Coloque un correo electrónico válido")
 	private String emailSesion;
 
 	@Column(name="dniSesion", nullable=true)
