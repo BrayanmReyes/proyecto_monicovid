@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pe.akiramenai.project.unasam.spring.service.IReporteService;
 import pe.akiramenai.project.unasam.spring.service.ITemperaturaService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
+import pe.akiramenai.project.unasam.spring.serviceimpl.TemperaturaServiceImpl;
 
 
 @Controller
@@ -21,13 +22,15 @@ public class GraphController {
 	private IReporteService rService;
 	
 	
+	
+	
 	@Autowired
 	private IUsuarioService eService;//paciente
 	
 	@Autowired
 	private MessageController mController;//paciente
 	
-	
+	//Normal
 	@RequestMapping("/reporteTemperatura")
 	public String listarTemperaturasUsuario(Map<String, Object>model)
 	{
@@ -35,6 +38,7 @@ public class GraphController {
 		model.put("listaUsuarios", eService.listar());
 		return "monicovidReporteTemperaturaUsuario";
 	}
+	
 	
 	@RequestMapping("/reporteOxigenacion")
 	public String listarOxigenoUsuario(Map<String, Object>model)
@@ -52,6 +56,20 @@ public class GraphController {
 		model.addAttribute("listaReportes", rService.buscarporPacienteUserNameOrdenado(eService.obtenerUsuario()));
 		model.addAttribute("mensaje", "Usted presenta complicaciones en su salud");
 		return "monicovidPacienteVerReportes";
+	}
+	
+	//Paciente Buscado
+	@RequestMapping("/reporteTemperaturaPacienteBuscado")
+	public String listarTemperaturasPacienteBuscado(Map<String, Object>model)
+	{
+		
+		return "monicovidReporteTemperaturaPacienteBuscado";
+	}
+	
+	@RequestMapping("/reporteOxigenacionPacienteBuscado")
+	public String listarOxigenoPacienteBuscado(Map<String, Object>model)
+	{
+		return "monicovidReporteOxigenoPacienteBuscado";
 	}
 }
 

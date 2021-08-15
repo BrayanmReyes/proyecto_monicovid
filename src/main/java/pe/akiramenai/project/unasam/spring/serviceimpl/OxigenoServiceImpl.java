@@ -20,6 +20,8 @@ public class OxigenoServiceImpl implements IOxigenoService{
 	@Autowired
 	private IOxigenoDAO dOxigeno;
 	
+	private String pacienteBuscado;
+	
 	@Override
 	@Transactional
 	public boolean insertar(Oxigeno Oxigeno)
@@ -124,4 +126,14 @@ public class OxigenoServiceImpl implements IOxigenoService{
 		
 		return listaDefinitiva;
 	}
+	
+	@Override
+	public String getPacienteBuscado() {
+		return pacienteBuscado;
+	}
+
+	public void setPacienteBuscado(String pacienteBuscado) {
+		this.pacienteBuscado = pacienteBuscado;
+	}
+	
 }

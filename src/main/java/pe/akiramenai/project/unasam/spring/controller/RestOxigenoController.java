@@ -21,7 +21,7 @@ public class RestOxigenoController {
 
 	@Autowired
 	private IOxigenoService aService;
-		
+	
 	@RequestMapping("/paciente")
 	public String OxigenoPaciente(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -32,6 +32,15 @@ public class RestOxigenoController {
 		String userName = userDetails.getUsername();
 		
 		List<Oxigeno> foo = aService.listarOxigenacionbyUsernameOrdenado(userName);
+		String json = new Gson().toJson(foo);
+		return json;
+	}
+	
+	@RequestMapping("/pacienteBuscado")
+	public String OxigenoPacienteBuscado(Model model) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		List<Oxigeno> foo = aService.listarOxigenacionbyUsernameOrdenado(aService.getPacienteBuscado());
 		String json = new Gson().toJson(foo);
 		return json;
 	}

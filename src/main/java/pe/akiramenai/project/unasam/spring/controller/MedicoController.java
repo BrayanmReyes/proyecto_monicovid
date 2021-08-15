@@ -14,6 +14,8 @@ import pe.akiramenai.project.unasam.spring.model.Usuario;
 import pe.akiramenai.project.unasam.spring.model.Reporte;
 import pe.akiramenai.project.unasam.spring.service.IReporteService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
+import pe.akiramenai.project.unasam.spring.serviceimpl.OxigenoServiceImpl;
+import pe.akiramenai.project.unasam.spring.serviceimpl.TemperaturaServiceImpl;
 
 @Controller
 @RequestMapping("/medico")
@@ -29,6 +31,11 @@ public class MedicoController {
 	private SesionController sController;
 	
 	private List<Reporte> listReportes;
+	
+	@Autowired
+	private TemperaturaServiceImpl tServiceImpl;
+	@Autowired
+	private OxigenoServiceImpl oServiceImpl;
 	
 	@RequestMapping("/verReportes")
 	public String verReportes(Model model)
@@ -65,6 +72,8 @@ public class MedicoController {
 		}
 		else {
 				List<Reporte> reportes=rService.buscarporPacienteDNIOrdenado(objUsuario.getDni());
+				tServiceImpl.setPacienteBuscado(uService.buscarUsuario(objUsuario.getDni()).get(0).getUsername());
+				oServiceImpl.setPacienteBuscado(uService.buscarUsuario(objUsuario.getDni()).get(0).getUsername());
 				boolean flag=false;
 				
 				if(reportes.size()>0)

@@ -24,4 +24,5 @@ public interface ITemperaturaService {
 	public Date obtenerUltimoRegistro(String username);
 	
 	public List<Temperatura> listarTemperaturabyUsernameOrdenado(String username);
+	public String getPacienteBuscado();
 }

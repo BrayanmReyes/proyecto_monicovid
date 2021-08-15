@@ -32,6 +32,21 @@
 					<button type ="submit" class="btn btn-primary">Buscar</button>
 				</div>
 			</div>
+			<br>
+			<div th:if="${listaReportes != null}" class="botones-ver-graficas">
+				<a th:href="@{/graph/reporteTemperaturaPacienteBuscado}"
+					id="add-row" type="button"
+				class="btn btn-success btn-md left-block"> <span
+				class="glyphicon glyphicon-plus">Ver Gráfico de T°</span>
+				</a>
+				
+				<a th:href="@{/graph/reporteOxigenacionPacienteBuscado}"
+					id="add-row" type="button"
+				class="btn btn-primary btn-md left-block"> <span
+				class="glyphicon glyphicon-plus">Ver Gráfico de SpO2</span>
+				</a>
+				
+			</div>
 			<div class="row clearfix">
 				<div class="col-md-12 column">
 					<br>
@@ -61,16 +76,16 @@
 							    </td>
 							    <td align="center">
 							    	<span th:if="${t.sintoma != null}">
-										<a type="button" class="btn btn-success celeste" th:href="@{'/reporte/verReportesSintoma/'+ ${t.id}}"><i class="fas fa-eye"></i></a>	
+										<a type="button" class="btn btn-success celeste" th:href="@{'/reporte/verReportesSintoma/'+ ${t.id}}"><i class="fas fa-eye"></i>	Ver</a>	
 									</span>
 							    	<span th:unless="${t.sintoma != null}">No registrado</span>
 							    </td>
 							</tr>
 
 						</tbody>
-
+						
 					</table>
-
+					
 				</div>
 			</div>
 		</form>

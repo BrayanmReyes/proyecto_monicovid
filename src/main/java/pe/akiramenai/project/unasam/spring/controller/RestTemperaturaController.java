@@ -27,6 +27,8 @@ public class RestTemperaturaController {
 	@Autowired
 	private ITemperaturaService aService;
 	
+	
+	//Normal
 	@RequestMapping("/paciente")
 	public String TemperaturaPaciente(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -67,6 +69,25 @@ public class RestTemperaturaController {
 			return new ResponseEntity<Iterable<Temperatura>>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	//Pacientes
+	@RequestMapping("/pacienteBuscado")
+	public String TemperaturaPacienteBuscado(Model model) {
+		List<Temperatura> foo = aService.listarTemperaturabyUsernameOrdenado(aService.getPacienteBuscado());
+		String json = new Gson().toJson(foo);
+		return json;
+	}
+	
+	@RequestMapping(value="findPacienteBuscado}", method=RequestMethod.GET,
+			produces= {MimeTypeUtils.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Iterable<Temperatura>> findAllByUserFound() {
+		try {			
+			return new ResponseEntity<Iterable<Temperatura>>(aService.listarTemperaturabyUsername(aService.getPacienteBuscado()),HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<Iterable<Temperatura>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 
 }
 

@@ -21,6 +21,8 @@ public class TemperaturaServiceImpl implements ITemperaturaService{
 	@Autowired
 	private ITemperaturaDAO dTemperatura;
 	
+	private String pacienteBuscado;
+	
 	@Override
 	@Transactional
 	public boolean insertar(Temperatura Temperatura)
@@ -150,6 +152,16 @@ public class TemperaturaServiceImpl implements ITemperaturaService{
 			listaDefinitiva = listaTemp;
 		
 		return listaDefinitiva;
+	}
+	
+	@Override
+	public String getPacienteBuscado() {
+		return pacienteBuscado;
+	}
+
+	
+	public void setPacienteBuscado(String pacienteBuscado) {
+		this.pacienteBuscado = pacienteBuscado;
 	}
 
 }

@@ -19,4 +19,5 @@ public interface IOxigenoService {
 	public boolean isComplicacionOxigeno(String username);
 	
 	public List<Oxigeno> listarOxigenacionbyUsernameOrdenado(String username);
+	public String getPacienteBuscado();
 }

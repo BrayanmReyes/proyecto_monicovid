@@ -840,3 +840,21 @@ input[type=range]::-ms-track {
         width: 100%;
     }
 }
+
+
+/*botones ver gráficas*/
+.botones-ver-graficas{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.botones-ver-graficas .btn-primary{
+    background-color: #0AACB9;
+    border-color: #0AACB9;
+}
+
+.botones-ver-graficas .btn-success{
+    background-color: #F25270;
+    border-color: #F25270;
+}
