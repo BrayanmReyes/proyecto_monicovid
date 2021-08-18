@@ -185,7 +185,9 @@ public class SesionController {
 					boolean flag=uService.modificarNuevaPassword(uService.obtenerObjetoUsuario());
 					if(flag) {
 						dir.setMensaje("Se cambió la contraseña correctamente");
-						return "redirect:/monicovid/index";}
+						model.addAttribute("errormessage2", "Se cambió la contraseña correctamente");
+						return "modificarContraseña";
+					}
 					else {
 						mensaje="Ocurrió un error";
 						objRedir.addFlashAttribute("errormessage", mensaje);
@@ -195,7 +197,7 @@ public class SesionController {
 
 				}
 				else {
-					mensaje= "La contraseñas no coinciden";
+					mensaje= "Las contraseñas no coinciden";
 					objRedir.addFlashAttribute("errormessage", mensaje);
 					return "redirect:/sesion/irModificarContrasenia";
 

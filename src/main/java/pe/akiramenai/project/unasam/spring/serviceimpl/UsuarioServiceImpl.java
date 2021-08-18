@@ -1,8 +1,11 @@
 package pe.akiramenai.project.unasam.spring.serviceimpl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -216,6 +219,20 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 	
 	@Override
+	public void cambiarUsuarioRecuperado(String recuperado, Long id)
+	{
+		try {
+			dUsuario.modificarUsuarioRecuperadobyId(recuperado, id);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}			
+	}
+
+
+
+	@Override
 	public List<Usuario> buscarByApellidos(String apellido) {
 		return dUsuario.buscarByApellidos(apellido);
 	}
@@ -226,20 +243,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 	
 	@Override
-	public List<Usuario> buscarEstudianteDNI(String dni){
-		return dUsuario.buscarEstudianteByDNI(dni, "ROLE_ESTUDIANTE");
+	public Date obtenerDate(){
+		TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
+		Calendar ahoraUTC = Calendar.getInstance(AmericaLima);
+		return ahoraUTC.getTime();
 	}
-
-	@Override
-	public List<Usuario> buscarEstudianteApellidos(String apellido) {
-		return dUsuario.buscarEstudianteByApellidos(apellido, "ROLE_ESTUDIANTE");
-	}
-
-	@Override
-	public List<Usuario> buscarEstudianteCodigo(String codigo) {
-		return dUsuario.buscarEstudianteByCodigo(codigo, "ROLE_ESTUDIANTE");
-	}
-
+	
 	@Override
 	public Usuario buscarPorUserName(String username) {
 		// TODO Auto-generated method stub
@@ -261,4 +270,23 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		String userName = this.obtenerUsuario();
 		return this.buscarByCodigo(userName).get(0);
 	}
+
+
+
+	/*--------------------------------------------------------------------------------------*/
+	@Override
+	public List<Usuario> buscarEstudianteDNI(String dni){
+		return dUsuario.buscarEstudianteByDNI(dni, "ROLE_ESTUDIANTE");
+	}
+
+	@Override
+	public List<Usuario> buscarEstudianteApellidos(String apellido) {
+		return dUsuario.buscarEstudianteByApellidos(apellido, "ROLE_ESTUDIANTE");
+	}
+
+	@Override
+	public List<Usuario> buscarEstudianteCodigo(String codigo) {
+		return dUsuario.buscarEstudianteByCodigo(codigo, "ROLE_ESTUDIANTE");
+	}
+
 }

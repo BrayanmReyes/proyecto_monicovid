@@ -858,3 +858,16 @@ input[type=range]::-ms-track {
     background-color: #F25270;
     border-color: #F25270;
 }
+
+/*Médico Datos Paciente*/
+
+.info-paciente{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.info-paciente label{
+    font-weight: bold;
+}

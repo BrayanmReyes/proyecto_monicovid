@@ -1,6 +1,7 @@
 package pe.akiramenai.project.unasam.spring.controller;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -97,31 +98,24 @@ public class UsuarioController {
 	}	
 	
 	@RequestMapping("/recuperado")
-	public String recuperado(@ModelAttribute Usuario objUsuario, BindingResult binRes, Model model)
-			throws ParseException
-	{
+	public String recuperado(@ModelAttribute Usuario objUsuario, BindingResult binRes, Model model) throws ParseException
+	{	
 		if(binRes.hasErrors()) {
-			return "monicovidBienvenido";
-		
+			model.addAttribute("ciclos", uService.listarCiclos(1980,2999));
+			return "adminUsuario";
 		}
 		else {
-				Usuario usuarioActual=uService.obtenerObjetoUsuario();
-				
-				if(objUsuario==null)
-				{
-					return "redirect:/monicovid/index";
-					
-				}
-				else
-				{
-					Date dateActual=new Date();
-					usuarioActual.setRecuperado(dateActual.toString());
-					uService.modificar(usuarioActual);
-					return "monicovidBienvenido";
-				}						
-			}		
-	}	
-	
+			
+			Usuario usuarioActual=uService.obtenerObjetoUsuario();
+			Date dateActual= uService.obtenerDate();
+			String pattern = "dd-MM-yyyy";
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+			String dateFinal = simpleDateFormat.format(dateActual);
+			uService.cambiarUsuarioRecuperado(dateFinal,usuarioActual.getId());
+			model.addAttribute("recuperado", dateFinal);
+			return "monicovidBienvenido";
+		}	
+	}
 	
 	@RequestMapping("/lista")
 	public String lista(Model model)

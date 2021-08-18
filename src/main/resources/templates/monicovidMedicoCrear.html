@@ -3,14 +3,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Crear Cuenta Medico</title>
+	<title>Crear cuenta del Médico</title>
 	<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
 </head>
 <body>
 	
 	<br>
 	<div th:replace="fragments/monicovidReferencias :: referencias"></div>
-	<br>
 	<div class="container">
 		<form th:action="@{/cuenta/registrarMedico}" method="post"
 			th:object="${usuario}">
@@ -19,7 +18,7 @@
 			</div>
 			<br>
 			<div class="titulo titulo-crearCuenta" align= "center">
-				<h1>Crear cuenta de Médico</h1>
+				<h1>Crear cuenta del Médico</h1>
 			</div>
 			<br>
 			<div id="coordenadas" style="display:none;"></div>
@@ -125,7 +124,7 @@
 			<br>
 			<br>	
 			<div class="botones">
-				<button type ="submit" class="btn btn-primary">Siguiente</button>
+				<button type ="submit" class="btn btn-primary">Registrarte</button>
 				<a href="/login" class="cancelar">Cancelar</a>
 			</div>
 			<br>

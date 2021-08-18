@@ -8,6 +8,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pe.akiramenai.project.unasam.spring.model.Sesion;
 import pe.akiramenai.project.unasam.spring.model.Usuario;
+import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
 import pe.akiramenai.project.unasam.spring.serviceimpl.JpaUserDetailsService;
 
 
@@ -17,6 +18,9 @@ public class DireccionController {
 
 	@Autowired
 	JpaUserDetailsService jpa;
+
+	@Autowired
+	IUsuarioService uService;
 	
 	private String mensaje;
 	@RequestMapping("/bienvenido")
@@ -31,6 +35,7 @@ public class DireccionController {
 			if(!mensaje.equalsIgnoreCase(""))
 				objRedir.addFlashAttribute("successmessage", mensaje);
 		model.addAttribute("usuario", new Usuario());
+		model.addAttribute("recuperado", uService.obtenerObjetoUsuario().getRecuperado());
 		return "monicovidBienvenido";
 	}
 	

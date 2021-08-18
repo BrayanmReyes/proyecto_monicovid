@@ -1,5 +1,6 @@
 package pe.akiramenai.project.unasam.spring.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,4 +33,6 @@ public interface IUsuarioService {
 		public Usuario buscarPorUserName(String username);
 		public String obtenerUsuario();
 		public Usuario obtenerObjetoUsuario();
+		public Date obtenerDate();
+		public void cambiarUsuarioRecuperado(String recuperado, Long id);
 }

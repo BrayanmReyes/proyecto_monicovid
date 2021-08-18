@@ -64,10 +64,8 @@ public class OxigenoController {
 	{	
 		Usuario usuario= eService.buscarPorUserName(eService.obtenerUsuario());
 		Oxigeno oxigeno=new Oxigeno();
-		TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
-		Calendar ahoraUTC = Calendar.getInstance(AmericaLima);
 		
-		Date dateActual=ahoraUTC.getTime();
+		Date dateActual=eService.obtenerDate();
 
 		oxigeno.setFechaRegistro(dateActual);
 		oxigeno.setPaciente(usuario);
@@ -164,29 +162,5 @@ public class OxigenoController {
 		return "monicovidlistOxigenacion";
 	}
 	
-	///////////////////GUIA///////////////////////////////////////////////////////////////
-	@GetMapping("/form/{id}")
-	public String newInvoice(@PathVariable(value = "id") Long id, Model model) {
-		try {
-			Optional<Usuario> usuario = eService.buscarId(id);
-			if (!usuario.isPresent()) {
-				model.addAttribute("info", "Usuario no existe");
-				return "redirect:/oxigeno/listar";
-			} else {
-				Oxigeno Ox = new Oxigeno();
-				Ox.setPaciente(usuario.get());
-				
-				Date dateActual=new Date();
-
-				Ox.setFechaRegistro(dateActual);
-				model.addAttribute("oxigeno", Ox);
-
-				model.addAttribute("listaUsuarios", eService.listar());
-			}
-		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
-		}
-		return "monicovidPacienteOxigeno";
-	}
 }
 

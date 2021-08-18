@@ -37,6 +37,8 @@ public class MedicoController {
 	@Autowired
 	private OxigenoServiceImpl oServiceImpl;
 	
+	private Usuario pacienteBuscado;
+
 	@RequestMapping("/verReportes")
 	public String verReportes(Model model)
 	{
@@ -61,6 +63,14 @@ public class MedicoController {
 		model.addAttribute("listaReportes", listReportes);
 		return "monicovidMedicoVerReportes";
 	}
+
+	@RequestMapping("/verDatosPaciente")
+	public String verDatosPaciente(Model model)
+	{
+		model.addAttribute("usuario", pacienteBuscado);
+		return "monicovidMedicoVerPacienteDatos";
+	}
+
 	
 	@RequestMapping("/buscar")
 	public String buscar(@ModelAttribute Usuario objUsuario, BindingResult binRes, Model model)
@@ -72,8 +82,10 @@ public class MedicoController {
 		}
 		else {
 				List<Reporte> reportes=rService.buscarporPacienteDNIOrdenado(objUsuario.getDni());
-				tServiceImpl.setPacienteBuscado(uService.buscarUsuario(objUsuario.getDni()).get(0).getUsername());
-				oServiceImpl.setPacienteBuscado(uService.buscarUsuario(objUsuario.getDni()).get(0).getUsername());
+				pacienteBuscado= uService.buscarUsuario(objUsuario.getDni()).get(0);
+				tServiceImpl.setPacienteBuscado(pacienteBuscado.getUsername());
+				oServiceImpl.setPacienteBuscado(pacienteBuscado.getUsername());
+				
 				boolean flag=false;
 				
 				if(reportes.size()>0)

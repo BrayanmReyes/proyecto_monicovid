@@ -3,7 +3,10 @@ package pe.akiramenai.project.unasam.spring.repository;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -48,5 +51,9 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Long>{
 	@Query("from Usuario c where c.username like %:username%")
 	Usuario buscarPorUserName(String username);
 	
-
+	@Transactional
+	@Modifying
+	@Query("update Usuario r set r.recuperado = :recuperado where r.id = :id")
+	void modificarUsuarioRecuperadobyId(@Param("recuperado")String recuperado, @Param("id")Long id);
+	
 }

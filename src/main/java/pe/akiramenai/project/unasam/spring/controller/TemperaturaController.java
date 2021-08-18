@@ -67,11 +67,8 @@ public class TemperaturaController {
 		Temperatura temperatura=new Temperatura();
 		Usuario usuario= eService.buscarPorUserName(eService.obtenerUsuario());
 		//Usuario usuario= eService.getUsuario();
-		
-		TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
-		Calendar ahoraUTC = Calendar.getInstance(AmericaLima);
-		
-		Date dateActual=ahoraUTC.getTime();
+				
+		Date dateActual=eService.obtenerDate();
 		temperatura.setFechaRegistro(dateActual);
 		temperatura.setPaciente(usuario);
 		Double valor = 36.5;
@@ -166,31 +163,5 @@ public class TemperaturaController {
 		return "monicovidlistTemperaturas";
 	}
 	
-	@GetMapping("/form/{id}")
-	public String newInvoice(@PathVariable(value = "id") Long id, Model model) {
-		try {
-			Optional<Usuario> usuario = eService.buscarId(id);
-			if (!usuario.isPresent()) {
-				model.addAttribute("info", "Usuario no existe");
-				return "redirect:/temperatura/listar";
-			} else {
-				Temperatura Temperatura = new Temperatura();
-				Temperatura.setPaciente(usuario.get());
-				//Date date=new Date();
-				//DateFormat hourdateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
-				// cod= String.valueOf(hourdateFormat.format(date));
-				//Proceso.setCodigoProceso(cod+"-PR");
-				Date dateActual=new Date();
-				//DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				Temperatura.setFechaRegistro(dateActual);
-				model.addAttribute("temperatura", Temperatura);
-				//model.addAttribute("listaAsesors", rService.listarAsesores());
-				model.addAttribute("listaUsuarios", eService.listar());
-			}
-		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
-		}
-		return "monicovidPacienteTemperatura";
-	}
 }
 

@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>MODIFICAR CONTRASEÑA</title>
+	<title>Modificar Contraseña</title>
 	<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
 
 </head>
@@ -48,9 +48,11 @@
 		</form>
 		<br>
 		<div class="alert alert-warning alert-dismissible fade show modificar-pwd" role="alert" style="opacity:1;" th:if="${errormessage}"> 
-		<button type="button btn-warning-pwd" class="close" data-dismiss="alert" aria-label="Close">&times;</button> 
-		<strong th:text="${errormessage}"></strong> </div>
-	
+			<strong th:text="${errormessage}"></strong> 
+		</div>
+		<div class="alert alert-success alert-dismissible fade show modificar-pwd" role="alert" style="opacity:1;" th:if="${errormessage2}"> 
+			<strong th:text="${errormessage2}"></strong> 
+		</div>
 	</div>
 	<div th:replace="fragments/monicovidFooter :: footer"></div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

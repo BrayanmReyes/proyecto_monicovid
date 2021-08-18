@@ -72,10 +72,8 @@ public class SintomaController {
 	{	
 		Usuario usuario= eService.buscarPorUserName(eService.obtenerUsuario());
 		Sintoma sintoma=new Sintoma();
-		TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
-		Calendar ahoraUTC = Calendar.getInstance(AmericaLima);
 		
-		Date dateActual=ahoraUTC.getTime();
+		Date dateActual=eService.obtenerDate();
 
 		sintoma.setFechaRegistro(dateActual);
 		sintoma.setPaciente(usuario);
@@ -178,29 +176,5 @@ public class SintomaController {
 		return "monicovidlistSintomas";
 	}
 	
-	///////////////////GUIA///////////////////////////////////////////////////////////////
-	@GetMapping("/form/{id}")
-	public String newInvoice(@PathVariable(value = "id") Long id, Model model) {
-		try {
-			Optional<Usuario> usuario = eService.buscarId(id);
-			if (!usuario.isPresent()) {
-				model.addAttribute("info", "Usuario no existe");
-				return "redirect:/sintoma/listar";
-			} else {
-				Sintoma Sint = new Sintoma();
-				Sint.setPaciente(usuario.get());
-				
-				Date dateActual=new Date();
-
-				Sint.setFechaRegistro(dateActual);
-				model.addAttribute("sintoma", Sint);
-
-				model.addAttribute("listaUsuarios", eService.listar());
-			}
-		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
-		}
-		return "monicovidPacienteSintoma";
-	}
 }
 

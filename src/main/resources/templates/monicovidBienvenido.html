@@ -41,14 +41,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<h4>¿Ya te recuperaste de tu enfermedad?</h4>
 			</div>
 			<br>
+			<div display="none"><span id="val-recuperado" th:text="${recuperado}"></span></div>
+
 			<div class="botones btn-recuperado seccion">
 				<button
-				id="add-row" type="button" class="btn btn-primary btn-md left-block"
+				id="btn-recuperado" type="button" class="btn btn-primary btn-md left-block"
 				data-bs-toggle="modal" data-bs-target="#exampleModal"> 
 					<span class="glyphicon glyphicon-plus">Ya estoy recuperado</span>
 				</button>
 			</div>
+
 		</div>
+		
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content contenedor-modal-externo">
@@ -97,7 +101,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
           </div>
 	</div>	
 	<div th:replace="fragments/monicovidFooter :: footer"></div>
-		
+	<script>
+		window.onload = function() {
+			$("#val-recuperado").hide();
+			var recuperado = $("#val-recuperado").text();
+			
+			if(recuperado!="" && recuperado!=null)
+				$("#btn-recuperado").attr('disabled', 'disabled');
+		}
+	</script>	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
 </html>
