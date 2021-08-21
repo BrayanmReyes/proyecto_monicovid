@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -196,18 +197,19 @@ public class MessageController {
 			if(tService.obtenerUltimoRegistro(usuario.getUsername())!=null) {
 				//Último registro
 				Date horaMonitoreo = tService.obtenerUltimoRegistro(usuario.getUsername());
+				TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
 				
 				//Añadir 12h a la hora del ultimo registro
-				Calendar horaC = Calendar.getInstance();
+				Calendar horaC = Calendar.getInstance(AmericaLima);
 				horaC.setTime(horaMonitoreo);
 				horaC.add(horaC.HOUR, +12);
 				Date horaMonitoreoMas12 = horaC.getTime();
-				
+								
 				//Hora actual de la alerta
 				Date horaActual = new Date();
 				
 				//Hora del ultimo monitoreo + 8h
-				Calendar horaM = Calendar.getInstance();
+				Calendar horaM = Calendar.getInstance(AmericaLima);
 				horaM.setTime(horaMonitoreo);
 				horaM.add(horaM.HOUR, +8);
 				Date horaMonitoreoMas8 = horaM.getTime();
@@ -237,9 +239,8 @@ public class MessageController {
 			else
 				mensajeString = "Hola "+ usuario.getNombre() + ", no olvides realizar tu monitoreo";
 			
-			//sService.sendMail(usuario.getUsername(),"MONICOVID: Alerta de Monitoreo", mensajeString);	
-			//this.enviarAlertaSMS(mensajeString, usuario);
-			System.out.println(mensajeString);
+			sService.sendMail(usuario.getUsername(),"MONICOVID: Alerta de Monitoreo", mensajeString);	
+			this.enviarAlertaSMS(mensajeString, usuario);
 			
 		});
 		
@@ -256,34 +257,34 @@ public class MessageController {
 	}
 	
 	
-	@Scheduled(cron = "0 30 6 * 8 ?", zone="America/Lima")
+	@Scheduled(cron = "0 30 6 * 8 *", zone="America/Lima")
 	public void envioAlertaMañanaAgosto() {
 		
 		enviarAlerta();
 	}
 	
-	@Scheduled(cron = "0 30 14 * 8 ?", zone="America/Lima")
+	@Scheduled(cron = "0 30 14 * 8 *", zone="America/Lima")
 	public void envioAlertaTardeAgosto() {
 		enviarAlerta();
 	}
 	
-	@Scheduled(cron = "0 30 22 * 8 ?", zone="America/Lima")
+	@Scheduled(cron = "0 30 22 * 8 *", zone="America/Lima")
 	public void envioAlertaNocheAgosto() {
 		enviarAlerta();
 	}
 	
-	@Scheduled(cron = "0 30 6 * 9 ?", zone="America/Lima")
+	@Scheduled(cron = "0 30 6 * 9 *", zone="America/Lima")
 	public void envioAlertaMañanaSetiembre() {
 		
 		enviarAlerta();
 	}
 	
-	@Scheduled(cron = "0 30 14 * 9 ?", zone="America/Lima")
+	@Scheduled(cron = "0 30 14 * 9 *", zone="America/Lima")
 	public void envioAlertaTardeSetiembre() {
 		enviarAlerta();
 	}
 	
-	@Scheduled(cron = "0 30 22 * 9 ?", zone="America/Lima")
+	@Scheduled(cron = "0 30 22 * 9 *", zone="America/Lima")
 	public void envioAlertaNocheSetiembre() {
 		enviarAlerta();
 	}

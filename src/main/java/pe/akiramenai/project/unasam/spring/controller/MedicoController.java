@@ -3,6 +3,8 @@ package pe.akiramenai.project.unasam.spring.controller;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,29 +79,38 @@ public class MedicoController {
 			throws ParseException
 	{
 		if(binRes.hasErrors()) {
+			System.out.println("Tengo errores");
 			return "monicovidMedicoVerReportes";
 		
 		}
 		else {
 				List<Reporte> reportes=rService.buscarporPacienteDNIOrdenado(objUsuario.getDni());
-				pacienteBuscado= uService.buscarUsuario(objUsuario.getDni()).get(0);
-				tServiceImpl.setPacienteBuscado(pacienteBuscado.getUsername());
-				oServiceImpl.setPacienteBuscado(pacienteBuscado.getUsername());
-				
-				boolean flag=false;
-				
-				if(reportes.size()>0)
-					flag =true;
-				
-				if(flag) {
+				if(uService.buscarUsuario(objUsuario.getDni()).size()>0)
+				{
+					pacienteBuscado= uService.buscarUsuario(objUsuario.getDni()).get(0);
+					tServiceImpl.setPacienteBuscado(pacienteBuscado.getUsername());
+					oServiceImpl.setPacienteBuscado(pacienteBuscado.getUsername());
 					
-					model.addAttribute("listaReportes", reportes);
-					listReportes = reportes;
-					return "redirect:/medico/verReportesPaciente";}
+					boolean flag=false;
+					
+					if(reportes.size()>0)
+						flag =true;
+					
+					if(flag) {
+						
+						model.addAttribute("listaReportes", reportes);
+						listReportes = reportes;
+						return "redirect:/medico/verReportesPaciente";}
+					else {
+						model.addAttribute("mensaje", "No se han encontrado resultados");
+						return "redirect:/medico/verReportesPaciente";
+					}
+				}
 				else {
 					model.addAttribute("mensaje", "No se han encontrado resultados");
-					return "redirect:/medico/verReportes";
-				}							
+					listReportes = null;
+					return "redirect:/medico/verReportesPaciente";
+				}
 			}		
 	}	
 	

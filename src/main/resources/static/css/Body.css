@@ -584,14 +584,13 @@ input[type=range]::-ms-track {
 
 .buscador {
     display: flex;
+    justify-content: center;
 }
 .buscar-form{
     display: flex;
-    justify-content: space-between;
-    width: 25%;
-    margin: 0% 5% 0% 5%;
+    justify-content: space-around;
     align-items: center;
-}
+}   
 
 .buscar-form label{
     font-size: 14px;
@@ -599,7 +598,7 @@ input[type=range]::-ms-track {
     font-weight: bold;
 }
 .buscar-form input{
-    width: 50%;
+    width: 30%;
 }
 
 
@@ -650,7 +649,9 @@ input[type=range]::-ms-track {
 .no-results{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
+
 @media (max-width: 1200px){
     .buscar-form{
         width: 32%;
@@ -870,4 +871,15 @@ input[type=range]::-ms-track {
 
 .info-paciente label{
     font-weight: bold;
+}
+
+/*búsqueda paciente*/
+
+.mensaje-alerta-buscar-paciente{
+    display: flex;
+    justify-content: center;
+}
+
+.icono-no-resultados{
+    margin: 0 1%;
 }

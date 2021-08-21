@@ -133,7 +133,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		List<Usuario>lista=dUsuario.findAll();
 		List<Usuario>listaR=new ArrayList<Usuario>();
 		for(int i=0;i<lista.size();i++)
-		if(lista.get(i).getRoles().toString().contains("ADMIN"))
+		//if(lista.get(i).getRoles().toString().contains("USER"))
 			listaR.add(lista.get(i));
 		return listaR;
 	}
