@@ -69,7 +69,7 @@
 			</div>
 		</form>
 		<!-- POP UP -->
-		<div class="mensaje-alerta modal-alerta" th:if="${mensaje != null}">
+		<div class="mensaje-alerta modal-alerta" th:if="${mensaje == 'Usted presenta complicaciones en su salud'}">
 			<div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display:block;padding-right: 15px;" aria-modal="true" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content contenedor-modal-externo">
@@ -85,7 +85,7 @@
 									<span class="letra-rosa alerta-recuperado modal-center">
 										Presentas complicaciones, llama al 113 o dirígete a un establecimiento que cuente con punto COVID. Sino, dirígete a un centro de 
 										salud cercano. Para ver ubicaciones cercanas haz clic    
-										<a href="https://www.google.com.pe/maps/search/centros+de+salud+cercanos+a+mi+ubicación/" class="letra-rosa" target="_blank">aquí</a> 
+										<a href="https://www.google.com.pe/maps/search/centros+de+salud+cercanos+a+mi+ubicación/" class="letra-celeste" target="_blank">aquí</a> 
 									</span>
 									
 								</div>
@@ -103,7 +103,7 @@
 		</div>
 	</div>
 	<div th:replace="fragments/monicovidFooter :: footer"></div>
-	<div class="modal-backdrop fade show modal-alerta" th:if="${mensaje != null}"></div>
+	<div class="modal-backdrop fade show modal-alerta" th:if="${mensaje == 'Usted presenta complicaciones en su salud'}"></div>
 	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
     </script>
 	<script>

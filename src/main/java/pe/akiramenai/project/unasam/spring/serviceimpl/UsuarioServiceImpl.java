@@ -39,6 +39,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		Usuario.setPassword(passwordEncoder.encode(Usuario.getPassword()));
 		Usuario.setEmail(Usuario.getUsername());
 		Usuario.setNumero("51"+ Usuario.getNumero());
+		Usuario.setRecuperado(null);
 		Usuario objUsuario=dUsuario.save(Usuario);
 		
 		

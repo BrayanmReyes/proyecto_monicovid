@@ -190,58 +190,58 @@ public class MessageController {
 	
 	
 	public void enviarAlerta() {
-		
-		
 		uService.listarPacientes().forEach((usuario)->{
-			String mensajeString = "";
-			if(tService.obtenerUltimoRegistro(usuario.getUsername())!=null) {
-				//Último registro
-				Date horaMonitoreo = tService.obtenerUltimoRegistro(usuario.getUsername());
-				TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
-				
-				//Añadir 12h a la hora del ultimo registro
-				Calendar horaC = Calendar.getInstance(AmericaLima);
-				horaC.setTime(horaMonitoreo);
-				horaC.add(horaC.HOUR, +12);
-				Date horaMonitoreoMas12 = horaC.getTime();
-								
-				//Hora actual de la alerta
-				Date horaActual = new Date();
-				
-				//Hora del ultimo monitoreo + 8h
-				Calendar horaM = Calendar.getInstance(AmericaLima);
-				horaM.setTime(horaMonitoreo);
-				horaM.add(horaM.HOUR, +8);
-				Date horaMonitoreoMas8 = horaM.getTime();
-				
-				//Comparar monitoreo
-				//Si es positivo la hora Actual es después de la hora +12h (no se registró)
-				if(horaActual.compareTo(horaMonitoreoMas12)>0)
-					mensajeString = "Hola "+ usuario.getNombre() + ", tienes que ser constante en tus monitoreos si quieres cuidar tu salud. Por favor, monitoreate según las horas recomendadas";
-				else{
-					//Si es negativo la hora Actual es antes de la hora +12h (sí se registró)
-					//formateando fecha
-					SimpleDateFormat formateadorFecha = new SimpleDateFormat("hh:mm aa");
-					SimpleDateFormat formateadorHora = new SimpleDateFormat("'del' dd 'de' MMMM");
-					String mHora = formateadorFecha.format(horaMonitoreoMas8);
-					String meridiano = "";
-					if(mHora.contains("p"))
-						meridiano = " PM";
-					else
-						meridiano = " AM";
-					formateadorFecha = new SimpleDateFormat("hh:mm");
-					mHora = formateadorFecha.format(horaMonitoreoMas8)+ meridiano;
-					String mFecha =  formateadorHora.format(horaMonitoreoMas8);
-					mensajeString = "Hola "+ usuario.getNombre() + ", no olvides realizar tu monitoreo de las " + mHora + " " + mFecha +" si usted no lo ha hecho previamente.";	
+			if(usuario.getRecuperado()==""||usuario.getRecuperado()==null){
+				String mensajeString = "";
+				if(tService.obtenerUltimoRegistro(usuario.getUsername())!=null) {
+					//Último registro
+					Date horaMonitoreo = tService.obtenerUltimoRegistro(usuario.getUsername());
+					TimeZone AmericaLima = TimeZone.getTimeZone("America/Lima");
+					
+					//Añadir 12h a la hora del ultimo registro
+					Calendar horaC = Calendar.getInstance(AmericaLima);
+					horaC.setTime(horaMonitoreo);
+					horaC.add(horaC.HOUR, +12);
+					Date horaMonitoreoMas12 = horaC.getTime();
+									
+					//Hora actual de la alerta
+					Date horaActual = new Date();
+					
+					//Hora del ultimo monitoreo + 8h
+					Calendar horaM = Calendar.getInstance(AmericaLima);
+					horaM.setTime(horaMonitoreo);
+					horaM.add(horaM.HOUR, +8);
+					Date horaMonitoreoMas8 = horaM.getTime();
+					
+					//Comparar monitoreo
+					//Si es positivo la hora Actual es después de la hora +12h (no se registró)
+					if(horaActual.compareTo(horaMonitoreoMas12)>0)
+						mensajeString = "Hola "+ usuario.getNombre() + ", tienes que ser constante en tus monitoreos si quieres cuidar tu salud. Por favor, monitoreate según las horas recomendadas";
+					else{
+						//Si es negativo la hora Actual es antes de la hora +12h (sí se registró)
+						//formateando fecha
+						SimpleDateFormat formateadorFecha = new SimpleDateFormat("hh:mm aa");
+						SimpleDateFormat formateadorHora = new SimpleDateFormat("'del' dd 'de' MMMM");
+						String mHora = formateadorFecha.format(horaMonitoreoMas8);
+						String meridiano = "";
+						if(mHora.contains("p"))
+							meridiano = " PM";
+						else
+							meridiano = " AM";
+						formateadorFecha = new SimpleDateFormat("hh:mm");
+						mHora = formateadorFecha.format(horaMonitoreoMas8)+ meridiano;
+						String mFecha =  formateadorHora.format(horaMonitoreoMas8);
+						mensajeString = "Hola "+ usuario.getNombre() + ", no olvides realizar tu monitoreo de las " + mHora + " " + mFecha +" si usted no lo ha hecho previamente.";	
+					}
+					
 				}
+				else{
+					mensajeString = "Hola "+ usuario.getNombre() + ", no olvides realizar tu monitoreo";
+				}
+				sService.sendMail(usuario.getUsername(),"MONICOVID: Alerta de Monitoreo", mensajeString);	
+				this.enviarAlertaSMS(mensajeString, usuario);
 				
 			}
-			else
-				mensajeString = "Hola "+ usuario.getNombre() + ", no olvides realizar tu monitoreo";
-			
-			sService.sendMail(usuario.getUsername(),"MONICOVID: Alerta de Monitoreo", mensajeString);	
-			this.enviarAlertaSMS(mensajeString, usuario);
-			
 		});
 		
 	}
@@ -256,10 +256,8 @@ public class MessageController {
 			http.sendSMSMasivo(mensaje, usuario);
 	}
 	
-	
-	@Scheduled(cron = "0 30 6 * 8 *", zone="America/Lima")
+		@Scheduled(cron = "0 30 6 * 8 *", zone="America/Lima")
 	public void envioAlertaMañanaAgosto() {
-		
 		enviarAlerta();
 	}
 	
