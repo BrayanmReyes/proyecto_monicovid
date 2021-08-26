@@ -10,6 +10,10 @@
 	<div th:replace="fragments/monicovidHeader :: header"></div>
 
 	<div class="container">
+		<div class="titulo letra-rosa" align= "center">
+			<h1>Reportes</h1>
+		</div>
+		<br>
 		<form th:action="@{/medico/buscar}" method="post"
 			th:object="${usuario}">
 			<div class="busqueda-paciente">

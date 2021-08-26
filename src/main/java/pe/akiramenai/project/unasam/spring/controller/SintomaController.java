@@ -29,6 +29,7 @@ import pe.akiramenai.project.unasam.spring.service.IReporteService;
 import pe.akiramenai.project.unasam.spring.service.ISintomaService;
 import pe.akiramenai.project.unasam.spring.service.ITemperaturaService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
+import pe.akiramenai.project.unasam.spring.serviceimpl.UsuarioServiceImpl;
 
 
 @Controller
@@ -50,6 +51,9 @@ public class SintomaController {
 	
 	@Autowired
 	private IUsuarioService eService;//paciente
+
+	@Autowired
+	private UsuarioServiceImpl uImpl;
 	
 	@RequestMapping("/listar")
 	public String listar(Map<String, Object>model)
@@ -101,13 +105,7 @@ public class SintomaController {
 					Reporte reporte = listReportes.get(listReportes.size()-1);
 					reporte.setSintoma(objSintoma);
 					rService.modificarReporteSintomaPorUserName(objSintoma, reporte.getId());
-					if(tService.isComplicacionTemperatura(eService.obtenerUsuario()) || oService.isComplicacionOxigeno(eService.obtenerUsuario()))
-						return "redirect:/graph/irAlerta";
-					else{
-						model.addAttribute("listaReportes", rService.buscarporPacienteUserNameOrdenado(eService.obtenerUsuario()));
-						model.addAttribute("mensaje2", "Usted se encuentra estable");
-						return "monicovidPacienteVerReportes";
-					}
+					return "redirect:/reporte/verReportes";
 				}
 					
 				else {

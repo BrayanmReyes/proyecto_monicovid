@@ -10,20 +10,25 @@
 	<div th:replace="fragments/monicovidHeader :: header"></div>
 
 	<div class="container">
+		<div class="titulo letra-rosa" align= "center">
+			<h1>Reportes</h1>
+		</div>
+		<br>
 		<form id="myform">
 			<div class="row clearfix">
 				<div class="col-md-12 column">
 					<br>
-					<div class="mensaje-alerta">
-						<span th:if="${mensaje != null}" class="mensaje-alerta-span">
+					<div class="mensaje-alerta" th:if="${mensaje != null}">
+						<span th:if="${mensaje != 'Usted se encuentra estable'}" class="mensaje-alerta-span">
 							<i class="fas fa-exclamation-triangle mensaje-alerta-icono letra-rosa"></i>
 							<span class="letra-rosa mensaje-alerta-letra" th:text = "${mensaje}"></span>
 						</span>
-						<span th:if="${mensaje2 != null}" class="mensaje-alerta-span">
+						<span th:if="${mensaje == 'Usted se encuentra estable'}" class="mensaje-alerta-span">
 							<i class="fas fa-check-circle mensaje-alerta-icono letra-celeste"></i>
-							<span class="letra-celeste mensaje-alerta-letra" th:text = "${mensaje2}"></span>
+							<span class="letra-celeste mensaje-alerta-letra" th:text = "${mensaje}"></span>
 						</span>
 					</div>
+					<br>
 					<div class="table-responsive">
 						<table id="tab_logic" class="table table-bordered table-hover">
 							<thead>
@@ -36,7 +41,11 @@
 							</thead>
 							<tbody id="table-contenido" class="letra-celeste">
 								<tr th:each="t: ${listaReportes}">
-									<td align="center" th:text="${t.temperatura.fechaRegistro}"></td>
+									<td align="center">
+										<div class="fechaRegistro">	
+											<span th:text="${t.temperatura.fechaRegistro}"></span>
+										</div>
+									</td>
 									<td align="center">
 										<span th:if="${t.temperatura != null}" th:text = "${t.temperatura.valor}"></span>
 										<span th:unless="${t.temperatura != null}">No registrado</span>
@@ -59,9 +68,42 @@
 				</div>
 			</div>
 		</form>
+		<!-- POP UP -->
+		<div class="mensaje-alerta modal-alerta" th:if="${mensaje != null}">
+			<div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display:block;padding-right: 15px;" aria-modal="true" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content contenedor-modal-externo">
+						<div class="contenedor-modal-interno">
+							<br>
+							<div class="modal-header modal-center">
+								<span class="modal-title" id="exampleModalLabel"><i class="fas fa-exclamation-triangle letra-rosa icono-alerta"></i></span>
+							</div>
+							<br>
+							<div class="modal-body">
+								<form action="">
+								<div class="modal-flex">
+									<span class="letra-rosa alerta-recuperado modal-center">
+										Presentas complicaciones, llama al 113 o dirígete a un establecimiento que cuente con punto COVID. Sino, dirígete a un centro de 
+										salud cercano. Para ver ubicaciones cercanas haz clic    
+										<a href="https://www.google.com.pe/maps/search/centros+de+salud+cercanos+a+mi+ubicación/" class="letra-rosa" target="_blank">aquí</a> 
+									</span>
+									
+								</div>
+								<br>
+								<div class="botones">
+									<button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary btn-alerta" onclick="ocultarModal()">Entendido</button>
+								</div>
+								</form>
+								<br>	
+							</div>
+						</div>
+					</div>
+				</div>
+         	</div>
+		</div>
 	</div>
-
 	<div th:replace="fragments/monicovidFooter :: footer"></div>
+	<div class="modal-backdrop fade show modal-alerta" th:if="${mensaje != null}"></div>
 	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
     </script>
 	<script>
@@ -117,12 +159,14 @@
 
 	</style>
 	<script>
-		/*$("#tab_logic").addClass("table-responsive");
-		 if (matchMedia('(max-width: 992px)').matches) {
-			$(".dataTables_scrollHeadInner").css("width", "100%");
-			$(".dataTable").css("width", "100%");
-		} */
-
+		$('.fechaRegistro span').each(function() {
+			var text = $(this).text().replace(':00.0',' H');
+			$(this).text(text);
+		});
+		
+		function ocultarModal(){
+			$(".modal-alerta").hide();
+		};
 	</script>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

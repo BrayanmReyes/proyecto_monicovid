@@ -10,6 +10,7 @@ import pe.akiramenai.project.unasam.spring.service.IReporteService;
 import pe.akiramenai.project.unasam.spring.service.ITemperaturaService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
 import pe.akiramenai.project.unasam.spring.serviceimpl.TemperaturaServiceImpl;
+import pe.akiramenai.project.unasam.spring.serviceimpl.UsuarioServiceImpl;
 
 
 @Controller
@@ -30,6 +31,10 @@ public class GraphController {
 	@Autowired
 	private MessageController mController;//paciente
 	
+	@Autowired
+	private UsuarioServiceImpl uImpl;
+
+
 	//Normal
 	@RequestMapping("/reporteTemperatura")
 	public String listarTemperaturasUsuario(Map<String, Object>model)
@@ -54,7 +59,8 @@ public class GraphController {
 		mController.testSMS();
 		mController.enviarMensajeComplicacion();
 		model.addAttribute("listaReportes", rService.buscarporPacienteUserNameOrdenado(eService.obtenerUsuario()));
-		model.addAttribute("mensaje", "Usted presenta complicaciones en su salud");
+		uImpl.setMensaje("Usted presenta complicaciones en su salud");
+		model.addAttribute("mensaje", uImpl.getMensaje());
 		return "monicovidPacienteVerReportes";
 	}
 	

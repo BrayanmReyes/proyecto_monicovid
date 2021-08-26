@@ -27,6 +27,8 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	private Usuario usuario;
+
+	private String mensaje="";
 	
 	@Override
 	@Transactional
@@ -191,7 +193,15 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
 	
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
 	private boolean confirmarPassword(Usuario usuario){
 		return usuario.getPassword().equalsIgnoreCase(usuario.getConfirmPassword());
 	}

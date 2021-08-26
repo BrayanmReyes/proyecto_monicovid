@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pe.akiramenai.project.unasam.spring.model.Reporte;
+import pe.akiramenai.project.unasam.spring.service.IOxigenoService;
 import pe.akiramenai.project.unasam.spring.service.IReporteService;
+import pe.akiramenai.project.unasam.spring.service.ITemperaturaService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
+import pe.akiramenai.project.unasam.spring.serviceimpl.UsuarioServiceImpl;
 
 @Controller
 @RequestMapping("/reporte")
@@ -23,14 +26,38 @@ public class ReporteController {
 	
 	@Autowired
 	private IReporteService rService;
+
+	@Autowired
+	private ITemperaturaService tService;
+	
+	@Autowired
+	private IOxigenoService oService;
 	
 	private String back;
 	
+	@Autowired
+	private UsuarioServiceImpl uImpl;
+
 	@RequestMapping("/verReportes")
 	public String verReportes(Model model)
 	{
 		model.addAttribute("listaReportes", rService.buscarporPacienteUserNameOrdenado(uService.obtenerUsuario()));
-		return "monicovidPacienteVerReportes";
+		if(tService.listarTemperaturabyUsername(uService.obtenerUsuario()).size()>0){
+			if(tService.isComplicacionTemperatura(uService.obtenerUsuario()) || oService.isComplicacionOxigeno(uService.obtenerUsuario()))
+				return "redirect:/graph/irAlerta";
+			else{
+				model.addAttribute("listaReportes", rService.buscarporPacienteUserNameOrdenado(uService.obtenerUsuario()));
+				uImpl.setMensaje("Usted se encuentra estable");
+				model.addAttribute("mensaje", uImpl.getMensaje());
+				return "monicovidPacienteVerReportes";
+			}
+		}
+		else{
+			model.addAttribute("listaReportes", null);
+			model.addAttribute("mensaje", null);
+			return "monicovidPacienteVerReportes";
+		}
+
 	}
 	
 	@RequestMapping("/verReportesSintoma/{id}")

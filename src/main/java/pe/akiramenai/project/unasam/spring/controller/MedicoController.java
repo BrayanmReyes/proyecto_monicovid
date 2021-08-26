@@ -46,6 +46,7 @@ public class MedicoController {
 	{
 		model.addAttribute("usuario", new Usuario());
 		model.addAttribute("listaReportes", null);
+		model.addAttribute("mensaje", null);
 		return "monicovidMedicoVerReportes";
 	}
 	//test
