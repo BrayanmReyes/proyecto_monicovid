@@ -643,6 +643,10 @@ input[type=range]::-ms-track {
     color: #F25270;
 }
 
+.letra-rosa-bold{
+    color: #F25270;
+    font-weight: bold;
+}
 
 /*BUSCADOR*/
 

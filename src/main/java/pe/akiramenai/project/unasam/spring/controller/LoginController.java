@@ -32,6 +32,7 @@ public class LoginController {
 		if (error != null) {
 			model.addAttribute("error",
 					"Error en el login: Nombre de usuario o contraseña incorrecta, por favor vuelva a intentarlo!");
+			return "error";
 		}
 
 		if (logout != null) {
@@ -48,4 +49,5 @@ public class LoginController {
         }
          return "redirect:/";
      }
+
 }
