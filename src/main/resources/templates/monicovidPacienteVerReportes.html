@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Lista de Reportes</title>
+	<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
+</head>
+<body>
+	<div th:replace="fragments/monicovidHeader :: header"></div>
+
+	<div class="container">
+		<div class="titulo letra-rosa" align= "center">
+			<h1>Reportes</h1>
+		</div>
+		<br>
+		<form id="myform">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<br>
+					<div class="mensaje-alerta" th:if="${mensaje != null}">
+						<span th:if="${mensaje != 'Usted se encuentra estable'}" class="mensaje-alerta-span">
+							<i class="fas fa-exclamation-triangle mensaje-alerta-icono letra-rosa"></i>
+							<span class="letra-rosa mensaje-alerta-letra" th:text = "${mensaje}"></span>
+						</span>
+						<span th:if="${mensaje == 'Usted se encuentra estable'}" class="mensaje-alerta-span">
+							<i class="fas fa-check-circle mensaje-alerta-icono letra-celeste"></i>
+							<span class="letra-celeste mensaje-alerta-letra" th:text = "${mensaje}"></span>
+						</span>
+					</div>
+					<br>
+					<div class="table-responsive">
+						<table id="tab_logic" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th class="text-center">FECHA DE REGISTRO</th>
+									<th class="text-center">TEMPERATURA °C</th>
+									<th class="text-center">% SATURACIÓN DE O2</th>
+									<th class="text-center">SÍNTOMAS</th>
+								</tr>
+							</thead>
+							<tbody id="table-contenido" class="letra-celeste">
+								<tr th:each="t: ${listaReportes}">
+									<td align="center">
+										<div class="fechaRegistro">	
+											<span th:text="${t.temperatura.fechaRegistro}"></span>
+										</div>
+									</td>
+									<td align="center">
+										<div class="temperatura-valor">
+											<span th:if="${t.temperatura != null}" th:text = "${t.temperatura.valor}"></span>
+											<span th:unless="${t.temperatura != null}" class="letra-rosa">No registrado</span>
+										</div>
+									</td>
+									<td align="center">
+										<div class="oxigeno-valor">
+											<span th:if="${t.oxigeno != null}" th:text = "${t.oxigeno.valor}"></span>
+											<span th:unless="${t.oxigeno != null}" class="letra-rosa">No registrado</span>
+										</div>
+									</td>
+									<td align="center">
+										<span th:if="${t.sintoma != null}">
+											<a type="button" class="btn btn-success celeste" th:href="@{'/reporte/verReportesSintoma/'+ ${t.id}}"><i class="fas fa-eye"></i>	Ver</a>	
+										</span>
+										<span th:unless="${t.sintoma != null}" class="letra-rosa">No registrado</span>
+									</td>
+								</tr>
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- POP UP -->
+		<div class="mensaje-alerta modal-alerta" th:if="${mensaje == 'Usted presenta complicaciones en su salud'}">
+			<div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display:block;padding-right: 15px;" aria-modal="true" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content contenedor-modal-externo">
+						<div class="contenedor-modal-interno">
+							<br>
+							<div class="modal-header modal-center">
+								<span class="modal-title" id="exampleModalLabel"><i class="fas fa-exclamation-triangle letra-rosa icono-alerta"></i></span>
+							</div>
+							<br>
+							<div class="modal-body">
+								<form action="">
+								<div class="modal-flex">
+									<span class="letra-rosa alerta-recuperado modal-center">
+										Presentas complicaciones, llama al 113 o dirígete a un establecimiento que cuente con punto COVID. Sino, dirígete a un centro de 
+										salud cercano. Para ver ubicaciones cercanas haz clic    
+										<a href="https://www.google.com.pe/maps/search/centros+de+salud+cercanos+a+mi+ubicación/" class="letra-celeste" target="_blank">aquí</a> 
+									</span>
+									
+								</div>
+								<br>
+								<div class="botones">
+									<button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary btn-alerta" onclick="ocultarModal()">Entendido</button>
+								</div>
+								</form>
+								<br>	
+							</div>
+						</div>
+					</div>
+				</div>
+         	</div>
+		</div>
+	</div>
+	<div th:replace="fragments/monicovidFooter :: footer"></div>
+	<div class="modal-backdrop fade show modal-alerta" th:if="${mensaje == 'Usted presenta complicaciones en su salud'}"></div>
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    </script>
+	<script>
+		// Basic example
+		$(document).ready(function () {
+		$('#tab_logic').DataTable({
+			"pagingType": "simple_numbers",
+			"language": {
+                    processing: "Tratamiento en curso...",
+                    infoEmpty: "No existen datos.",
+                    infoPostFix: "",
+                    loadingRecords: "Cargando...",
+                    emptyTable: "No se han encontrado resultados",
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior	",
+                        next: "	Siguiente",
+                        last: "Ultimo"
+                    },
+					
+                    /* aria: {
+                        sortAscending: ": active para ordenar la columna en orden ascendente",
+                        sortDescending: ": active para ordenar la columna en orden descendente"
+                    } */
+                },
+			"ordering": false	
+		});
+		$('.dataTables_length').addClass('bs-select');
+		});
+    </script>
+	<style>
+		#tab_logic_length, #tab_logic_filter, #tab_logic_info {
+			display:none;
+		}
+		.paging_simple_numbers{
+			display: flex;
+    		justify-content: space-around;
+			align-items: center
+		}
+		
+		.paginate_button {
+			text-decoration: none;
+    		font-size: 22px;
+			color: #F25270;
+			padding: 1%;
+		}
+		.current{
+			color: #0AACB9;
+			font-weight: bold;
+		}
+		.paging_simple_numbers span{
+			width: 6%;
+			display: flex;
+			justify-content: space-between;
+		}
+		
+
+	</style>
+	<script>
+		$('.fechaRegistro span').each(function() {
+			var text = $(this).text().replace(':00.0',' H');
+			$(this).text(text);
+		});
+		
+		function ocultarModal(){
+			$(".modal-alerta").hide();
+		};
+		$('.temperatura-valor span').each(function() {
+			var text = $(this).text()
+			if(text!="No registrado"){
+				if(text>38.5)
+					$(this).addClass("letra-rosa-bold");
+			}
+			
+		});
+		$('.oxigeno-valor span').each(function() {
+			var text = $(this).text()
+			if(text!="No registrado"){
+				if(text<92.0)
+					$(this).addClass("letra-rosa-bold");
+			}
+			
+		});
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

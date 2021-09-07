@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<title>Gráfica de Oxigenación</title>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script >
+		$(document).ready(function () {
+			$.ajax({
+				type:'GET',
+				dataType:"json",
+				contentType: "application/json",
+				url:'../api/oxigenacion/pacienteBuscado',
+				success: function (result){
+					google.charts.load('current', {
+						'packages':['corechart']
+						});
+						google.charts.setOnLoadCallback(function () {
+						drawChart(result);
+					});
+				}
+			});
+			function drawChart(result){
+				var data= new google.visualization.DataTable();
+				data.addColumn('string','fechaRegistro');
+				data.addColumn('number','valor');
+				
+				var dataArray=[];
+				$.each(result, function(i, obj){
+					dataArray.push([obj.fechaRegistro, obj.valor]);
+				});
+				data.addRows(dataArray);
+				
+				var chart_options={
+						title: 'Gráfico de Saturación de Oxigenación',
+						titleTextStyle: {
+							color: '#0AACB9',
+							fontName: 'var(--bs-font-sans-serif)',
+							bold: true,
+							fontSize: 24
+						},
+
+						width: '90%',
+						height: 500,
+						legend:'none',
+						series: {
+							0: { color: '#0AACB9' },
+						},
+						chartArea: { 
+							width: '70%' 
+						},
+						lineWidth: 3
+				};
+				var chart=new google.visualization.LineChart(document.getElementById('barchart_div'));
+				chart.draw(data, chart_options);	
+			}			
+		});
+</script>
+
+</head>
+	<body>
+		<div th:replace="fragments/monicovidHeader :: header"></div>
+		<div class="container">
+			<br>
+			<div class="titulo letra-rosa" align= "center">
+				<h1>Gráficas del estado de salud</h1>
+			</div>
+			<br>		
+			<div id="container" class="graph-container">				
+				 <div id="barchart_div" class="graph-interno"></div>	
+			</div>
+			<br>
+			<div class="botones">
+				<a href="javascript:history.back()" class="btn btn-primary">Atrás</a>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+	</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Registro de Temperatura</title>
+	<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
+	<script type="text/javascript">
+		function handleMouseMove(value) {
+		const rangeValueElement = document.querySelector("#range-temperatura")
+		const inputElement = document.querySelector('input[type="range"]')
+		const fillAreaElement = document.querySelector(".fill-area")
+
+		const hueRotate = "hue-rotate(" + value + "deg)"
+
+		var valorTemperatura = document.getElementById("range")
+		
+		rangeValueElement.textContent = value
+		//rangeValueElement.style.filter = hueRotate
+
+		//inputElement.style.filter = hueRotate
+
+		fillAreaElement.style.left = value + "vw"
+		fillAreaElement.style.width = (100-value) + "vw"
+		fillAreaElement.style.filter = hueRotate
+		
+		valorTemperatura.value = value
+		}
+	</script>
+</head>
+<body>
+	<div th:replace="fragments/monicovidHeader :: header"></div>
+	<div class="container">
+		<div class="titulo" align= "center">
+			<h1>TEMPERATURA</h1>
+		</div>
+		<main>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/byIsxJi9TCQ" frameborder="0"
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</main>
+		<form th:action="@{/temperatura/registrar}" method="post"
+			th:object="${temperatura}">
+			<div class="form-group">
+				<div class="form-group" style="display:none;">
+					<label for="idTemperatura">ID:</label> 
+					<input type="text" th:field="*{idTemperatura}" readonly="readonly"
+					class="form-control" id="idTemperatura"></input>
+				</div>
+				
+				<div class="form-group" style="display:none;">
+					<label for="name">ID DEL PACIENTE:</label> 
+					<input type="text"	th:field="*{paciente.id}"
+					class="form-control" id="name"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('paciente')}"
+					th:errors="*{paciente}"></div>
+				</div>
+					
+				<div class="form-group" style="display:none;">
+					<label for="fechaRegistro">FECHA DE REGISTRO:</label> 
+					<input type="text"	th:field="*{fechaRegistro}"
+					class="form-control" id="fechaRegistro" readonly="readonly"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('fechaRegistro')}"
+					th:errors="*{fechaRegistro}"></div>
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="form-group">
+					<figure class="imagen-texto-parametro">
+						<div class="recomendaciones" align="center">
+
+						<h2>Recomendaciones</h2>
+							<ul>
+							
+								<li><p style="text-align: justify;">Si se mide debajo de la axila sumar 0.5 °C</p></li>
+								<li><p style="text-align: justify;">La medida debajo de la lengua es la más precisa</p></li>
+							</ul>
+						</div>
+						<div class="parametro" align="center">
+							<img class="img-parametro" src="/img/monicovid/datos/temp_img.png" alt="">
+						</div>
+					</figure>		    
+				</div>
+				<div class="form-group">
+					<br>
+					<br>
+					<br>
+					<div align= "center">
+						<div>
+							<div class="fill-area"></div>
+							<label id="range-temperatura" class="range-value" for="range">36.5</label>
+							<br>
+							 
+							<input id="range" type="range" name="range" th:field="*{valor}" min="35.0" max="41.0" step="0.1" onmousemove="handleMouseMove(this.value)" onchange="handleMouseMove(this.value)" list="tickmarks"/>
+							<br>
+							<div id="tickmarks">
+								<p>35</p>
+								<div class="marca-out">
+									<p>36</p>
+								</div>
+								<div class="marca-out">
+									<p>37</p>
+								</div>
+								<p>38</p>
+								<div class="marca-out">
+									<p>39</p>
+								</div>
+								<div class="marca-out">
+									<p>40</p>
+								</div>
+								<p>41</p>
+							</div>
+							<!-- <div class="span-valores">
+								<span class="span-min"> 34 °C </span>
+								<span class="span-max"> 40 °C </span>
+							</div>	 -->
+						</div>				
+					</div>
+				</div>				
+			</div>
+			<br>
+			<br>
+			<br>
+			<div class="botones" align= "center">
+				<button type ="submit" class="btn btn-primary" onclick="javascript=this.disabled = true; form.submit();">Aceptar</button>
+				<a th:href="@{/monicovid/index}" class="cancelar">Cancelar</a>
+			</div>
+		</form>
+	</div>
+	<div th:replace="fragments/monicovidFooter :: footer"></div>
+	<script text="javascript">
+		(function(window, document, undefined) {
+			"use strict";
+
+			// List of Video Vendors embeds you want to support
+			var players = ['iframe[src*="youtube.com"]', 'iframe[src*="vimeo.com"]'];
+
+			// Select videos
+			var fitVids = document.querySelectorAll(players.join(","));
+
+			// If there are videos on the page...
+			if (fitVids.length) {
+				// Loop through videos
+				for (var i = 0; i < fitVids.length; i++) {
+				// Get Video Information
+				var fitVid = fitVids[i];
+				var width = fitVid.getAttribute("width");
+				var height = fitVid.getAttribute("height");
+				var aspectRatio = height / width;
+				var parentDiv = fitVid.parentNode;
+
+				// Wrap it in a DIV
+				var div = document.createElement("div");
+				div.className = "fitVids-wrapper";
+				div.style.paddingBottom = aspectRatio * 100 + "%";
+				parentDiv.insertBefore(div, fitVid);
+				fitVid.remove();
+				div.appendChild(fitVid);
+
+				// Clear height/width from fitVid
+				fitVid.removeAttribute("height");
+				fitVid.removeAttribute("width");
+				}
+			}
+		})(window, document);
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

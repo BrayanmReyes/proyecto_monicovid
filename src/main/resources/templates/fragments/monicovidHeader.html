@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+	<meta charset="UTF-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+</head>
+<body>
+	
+	<div th:fragment="header">
+		<div th:replace="fragments/monicovidReferencias :: referencias"></div>
+		<div class="barra">  
+			<!-- INCIO NAV -->
+			<nav class="navbar navbar-expand-lg navbar-light navegacion">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand logo" th:href="@{/monicovid/index}"><img th:src="@{/img/monicovid/icon_64.png}"></a>
+					</div>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarColor02">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0 barra-space">
+						<!-- <li class="nav-item dropdown item-header">
+							<div class="btn-desplegable">
+								<a class="nav-link dropdown-toggle" id="navbarDropdown"
+								data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">REGISTRAR MIS PARÁMETROS</a>
+								<ul class="dropdown-menu normal-views" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" href="#" th:href="@{/temperatura/irRegistrar}">TEMPERATURA (T°)</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="#" th:href="@{/oxigeno/irRegistrar}">OXIGENACIÓN (SPO2)</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="#" th:href="@{/sintoma/irRegistrar}">SÍNTOMAS</a></li>
+								</ul>
+							</div>
+						</li> -->
+						<li class="nav-item item-header">
+							<i class="fas fa-bed nav-icon"></i>
+							<a class="nav-link link-header"
+							href="#" th:href="@{/temperatura/irRegistrar}"><span class="nav-invisibles">REGISTRAR PARÁMETROS</span></a>
+						</li>
+						<li class="nav-item item-header">
+							<i class="fas fa-clipboard-list nav-icon"></i>
+							<a class="nav-link link-header"
+							href="#" th:href="@{/reporte/verReportes}"><span class="nav-invisibles">REPORTES</span></a>
+						</li>
+						<li class="nav-item dropdown item-header">
+							<i class="fas fa-chart-area nav-icon"></i>
+							<div class="btn-desplegable">	
+								<a class="nav-link dropdown-toggle link-header" href="#" id="navbarDropdown" 
+								role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="true">VER GRÁFICAS</a>
+								<ul class="dropdown-menu normal-views" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" href="#" th:href="@{/graph/reporteTemperatura}">Temperatura</a></li>
+									<li><div class="dropdown-divider"></div></li>
+									<li><a class="dropdown-item" href="#" th:href="@{/graph/reporteOxigenacion}">Oxigenación</a></li>
+								</ul>
+							</div>
+						</li>
+						
+						<li class="nav-item item-header" sec:authorize="hasRole('ROLE_USER')">
+							<i class="fas fa-address-book nav-icon"></i>
+							<a class="nav-link link-header" 
+							href="#" th:href="@{/contacto/listar}"><span class="nav-invisibles">CONTACTOS</span></a>
+						</li>
+						<li class="nav-item item-header" sec:authorize="hasRole('ROLE_MEDICO')">
+							<i class="fas fa-search nav-icon"></i>
+							<a class="nav-link link-header"
+							href="#" th:href="@{/medico/verReportes}"><span class="nav-invisibles">BUSCAR PACIENTE</span></a>
+						</li>
+						<li class="nav-item item-header" sec:authorize="hasRole('ROLE_USER')">
+							<i class="fas fa-map-marked-alt nav-icon"></i>
+							<a class="nav-link link-header" 
+							href="https://www.google.com.pe/maps/search/centros+de+salud+cercanos+a+mi+ubicación/" target="_blank"><span class="nav-invisibles">CENTROS MÉDICOS</span></a>
+						</li>
+						<li class="nav-item item-header">
+							<div class="btn-desplegable">
+								<ul class="navbar-nav navbar-right">
+									<li class="dropdown show">
+										<a id="dropdownMenuLink" class="btn btn-outline-primary dropdown-toggle" href="#"
+										role="button" data-bs-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false"> 
+										<!-- <span	sec:authentication="name"></span> -->
+										<span><i class="fas fa-user"></i><span class="nav-invisibles">	CUENTA</span></span>
+										</a>
+										<div class="dropdown-menu">
+											<form id="logoutForm" th:action="@{/logout}" method="post">
+												<button class="dropdown-item dropdown-item-formato" onclick="document.getElementById('logoutForm').submit();"
+													type="submit">Cerrar Sesión
+												</button>
+											</form>
+											<form id="changePassword" th:action="@{/sesion/irModificarContrasenia}" method="post">
+												<button class="dropdown-item dropdown-item-formato" type="submit">Cambiar Contraseña
+												</button>
+											</form>
+										</div>
+									</li>		
+								</ul>
+							</div>
+						</li>
+						</ul>
+						
+					</div>
+					
+				</div>
+			</nav>
+			<script>
+				function Exit() {
+				   var x=confirm('Are You sure want to exit:');
+				   if(x) window.close();
+				 }
+			  </script>
+        </div>
+	</div>
+
+</body>
+
+</html>

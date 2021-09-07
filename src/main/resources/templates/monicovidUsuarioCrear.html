@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Crear Cuenta Paciente</title>
+<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
+</head>
+<body>
+	<div th:replace="fragments/monicovidReferencias :: referencias"></div>
+	<br>
+	<div class="container">
+		<div class="btn-monicovid" align= "center">
+			<img class="icon-monicovid" src="/img/monicovid/icon_256.png" alt="">
+		</div>
+		<div id="coordenadas" style="display:none;"></div>
+		<br>
+		<form th:action="@{/cuenta/registrarUsuario}" method="post"
+			th:object="${usuario}">
+			<div class="form-group">
+				<div class="form-group" style="display:none;">
+					<label for="id">ID:</label> 
+					<input type="text" th:field="*{id}"></input>
+				</div>
+				<div class="form-group">
+					<label for="dni">DNI:</label> 
+					<input type="text"	th:field="*{dni}"
+					class="form-control" id="dni" maxlength="8"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('dni')}"
+					th:errors="*{dni}"></div>
+					<span class="frm-info">No compartiremos su DNI con nadie más.</span>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="nombre">Nombres:</label> 
+					<input type="text"	th:field="*{nombre}"
+					class="form-control" id="nombre"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('nombre')}"
+					th:errors="*{nombre}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="apellido">Apellidos:</label> 
+					<input type="text"	th:field="*{apellido}"
+					class="form-control" id="apellido"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('apellido')}"
+					th:errors="*{apellido}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="username">Correo electrónico:</label> 
+					<input type="text"	th:field="*{username}"
+					class="form-control" id="username" maxlength="50"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('username')}"
+					th:errors="*{username}"></div>
+					<span class="frm-info">No compartiremos su correo con nadie más.</span>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="name">Número de celular:</label> 
+					<br>
+					<input type="text" class="form-control" th:field="*{numero}"
+					id="numero" maxlength="9"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('numero')}"
+					th:errors="*{numero}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="password">Contraseña:</label> 
+					<input type="password"	th:field="*{password}"
+					class="form-control" id="password"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('password')}"
+					th:errors="*{password}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="confirmPassword">Confirmar Contraseña:</label> 
+					<input type="password"	th:field="*{confirmPassword}"
+					class="form-control" id="confirmPassword" oninput="check()"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('confirmPassword')}"
+					th:errors="*{confirmPassword}"></div>
+				</div>
+				<div class="alert alert-warning alert-dismissible fade show modificar-pwd no-coincide-pwd" role="alert" style="opacity:1;"> 
+					<strong>Las contraseñas no coinciden</strong> 
+				</div>
+				<div class="alert alert-success alert-dismissible fade show modificar-pwd coincide-pwd" role="alert" style="opacity:1;"> 
+					<strong>Las contraseñas coinciden</strong> 
+				</div>
+				<br>
+				<div class="form-group" style="display:none;">
+					<label for="direccion">Dirección:</label> 
+					<input type="text"	th:field="*{direccion}"
+					class="form-control" id="direccion"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('direccion')}"
+					th:errors="*{direccion}"></div>
+				</div>
+				<div class="form-group" style="display:none;">
+				<label for="autoridad">Rol:</label> 
+				<select class="form-control" th:field="*{autoridad}" id="autoridad" name="autoridad">
+					<option th:value="ROLE_USER" th:text="USUARIO"/>
+				</select>
+				</div>
+
+				<div class="form-group" style="display:none;">
+				<label for="habilitado">Habilitado:</label> 
+				<select class="form-control" th:field="*{enable}" id="enable">
+					<option th:value="true" th:text="Habilitado"/>
+				</select>
+				<div class="alert alert-danger" 
+				th:if="${#fields.hasErrors('enable')}"
+				th:errors="*{enable}"></div>
+				</div>
+
+				<div class="form-group">
+					<label for="comorbilidad">Seleccione si presenta alguna comorbilidad:</label> 
+					<br>
+					<br>
+					<div class="form-check">	
+						<input id="flexCheckDefault" name="lista[]" class="form-check-input" type="checkbox" th:value="0"/>
+						<label class="form-check-label check-registrar" for="flexCheckDefault">
+							Obesidad
+						</label>
+					</div>
+					<div class="form-check">
+						<input id="flexCheckDefault" name="lista[]" class="form-check-input" type="checkbox" th:value="1"/>
+						<label class="form-check-label check-registrar" for="flexCheckDefault">
+							Diabetes
+						</label>
+					</div>
+					<div class="form-check">	
+						<input id="flexCheckDefault" name="lista[]" class="form-check-input" type="checkbox" th:value="2"/>
+						<label class="form-check-label check-registrar" for="flexCheckDefault">
+							Hipertensión
+						</label>
+					</div>
+					<div class="form-check">
+						<input id="flexCheckDefault" name="lista[]" class="form-check-input" type="checkbox" th:value="3"/>
+						<label class="form-check-label check-registrar" for="flexCheckDefault">
+							Enf. Resp. Crónica
+						</label>
+					</div>
+					<div class="form-check">	
+						<input id="flexCheckDefault" name="lista[]" class="form-check-input" type="checkbox" th:value="4"/>
+						<label class="form-check-label check-registrar" for="flexCheckDefault">
+							Enf. Cardiovascular
+						</label>
+					</div>
+						
+					<!-- <div >Ids seleccionados en matriz <span id="arr"></span></div>
+  					<div >Ids seleccionados <span id="str"></span></div> -->
+  					<input id="comorbilidad" type="text" th:field="*{comorbilidad}" class="form-control" style="display:none;"></input>
+  					
+				</div>
+
+			</div>
+			<br>
+			<div class="form-group" style="display:none;">
+				<input type="text"	th:field="*{recuperado}"
+				class="form-control" id="recuperado"></input>
+				<div class="alert alert-danger" 
+				th:if="${#fields.hasErrors('recuperado')}"
+				th:errors="*{recuperado}"></div>
+			</div>	
+			<br>
+			<div class="botones">
+				<button type ="submit" id="btn-registrar" class="btn btn-primary">Registrarte</button>
+				<a href="/login" class="cancelar">Cancelar</a>
+			</div>
+			<br>
+			<br>
+		</form>
+	</div>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script>
+    	$(document).ready(function() {
+			
+			$('[name="lista[]"]').click(function() {
+			      
+				var arr = $('[name="lista[]"]:checked').map(function(){
+				   	return this.value;
+				}).get();
+				    
+				var str = arr.join(',');
+				    
+				// $('#arr').text(JSON.stringify(arr));
+				    
+				// $('#str').text(str);
+				$('#comorbilidad').val(str);
+				console.log($('#comorbilidad').text());
+			});
+	
+		});
+	</script>
+	<!-- Script para mostrar las coordenadas-->
+	<script type="text/javascript">
+		window.onload = function() {
+			
+			if (navigator.geolocation) { //Validar si hay acceso web a la ubicación
+				navigator.geolocation.getCurrentPosition(function mostrarUbicacion(position){
+					var latitud = position.coords.latitude; //Obtener latitud
+					var longitud = position.coords.longitude; //Obtener longitud
+					var div = document.getElementById("coordenadas");
+					div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
+					var txt = document.getElementById("direccion");
+					txt.value=latitud + "," + longitud;
+				}, function error(positionError){
+					switch (positionError.code)
+					{
+						case positionError.PERMISSION_DENIED:
+							alert("No se ha permitido el acceso a la posición del usuario");
+						break;
+						case positionError.POSITION_UNAVAILABLE:
+							alert("No se ha podido acceder a la información de su posición.");
+						break;
+						case positionError.TIMEOUT:
+							alert("El servicio ha tardado demasiado tiempo en responder.");
+						break;
+						default:
+							alert("Error desconocido.");
+					}
+				}); //Obtiene la posición
+			}
+			$(".no-coincide-pwd").hide();
+			$(".coincide-pwd").hide();
+		}
+	</script>
+	<script>
+		function matchPassword(){
+			var pas1 = $("#password").val();
+			var pas2 = $("#confirmPassword").val();
+			return (pas1 === pas2);
+    	}
+		function check(){
+			if(!matchPassword()){
+				$(".no-coincide-pwd").show();
+				$(".coincide-pwd").hide();
+				$("#btn-registrar").prop('disabled', true);
+			}
+			else{
+				$("#btn-registrar").prop('disabled', false);
+				$(".no-coincide-pwd").hide();
+				$(".coincide-pwd").show();
+			}
+		}
+	</script>	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

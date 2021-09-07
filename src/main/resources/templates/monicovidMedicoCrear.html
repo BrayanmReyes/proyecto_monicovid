@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Crear cuenta del Médico</title>
+	<link rel="shortcut icon" type="image/png" th:href="@{/img/monicovid/icon_32.png}"></link>
+</head>
+<body>
+	
+	<br>
+	<div th:replace="fragments/monicovidReferencias :: referencias"></div>
+	<div class="container">
+		<form th:action="@{/cuenta/registrarMedico}" method="post"
+			th:object="${usuario}">
+			<div class="btn-monicovid" align= "center">
+				<img class="icon-monicovid" src="/img/monicovid/icon_256.png" alt="">
+			</div>
+			<br>
+			<div class="titulo titulo-crearCuenta" align= "center">
+				<h1>Crear cuenta del Médico</h1>
+			</div>
+			<br>
+			<div id="coordenadas" style="display:none;"></div>
+			
+			<div class="form-group">
+				<div class="form-group" style="display:none;">
+					<label for="id">ID:</label> 
+					<input type="text" th:field="*{id}"></input>
+				</div>
+				<div class="form-group">
+					<label for="dni">DNI:</label> 
+					<input type="text"	th:field="*{dni}"
+					class="form-control" id="dni" maxlength="8"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('dni')}"
+					th:errors="*{dni}"></div>
+					<span class="frm-info">No compartiremos su DNI con nadie más.</span>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="nombre">Nombres:</label> 
+					<input type="text"	th:field="*{nombre}"
+					class="form-control" id="nombre"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('nombre')}"
+					th:errors="*{nombre}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="apellido">Apellidos:</label> 
+					<input type="text"	th:field="*{apellido}"
+					class="form-control" id="apellido"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('apellido')}"
+					th:errors="*{apellido}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="username">Correo electrónico:</label> 
+					<input type="text"	th:field="*{username}"
+					class="form-control" id="username" maxlength="50"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('username')}"
+					th:errors="*{username}"></div>
+					<span class="frm-info">No compartiremos su correo con nadie más.</span>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="name">Número de celular:</label> 
+					<br>
+					<input type="text" class="form-control" th:field="*{numero}"
+					id="numero" maxlength="9"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('numero')}"
+					th:errors="*{numero}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="password">Contraseña:</label> 
+					<input type="password"	th:field="*{password}"
+					class="form-control" id="password"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('password')}"
+					th:errors="*{password}"></div>
+				</div>
+				<br>
+				<div class="form-group">
+					<label for="confirmPassword">Confirmar Contraseña:</label> 
+					<input type="password"	th:field="*{confirmPassword}"
+					class="form-control" id="confirmPassword"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('confirmPassword')}"
+					th:errors="*{confirmPassword}"></div>
+				</div>
+				<br>
+				<div class="form-group" style="display:none;">
+					<label for="direccion">Dirección:</label> 
+					<input type="text"	th:field="*{direccion}"
+					class="form-control" id="direccion"></input>
+					<div class="alert alert-danger" 
+					th:if="${#fields.hasErrors('direccion')}"
+					th:errors="*{direccion}"></div>
+				</div>		
+				
+				<div class="form-group" style="display:none;">
+				<label for="autoridad">Rol:</label> 
+				<select class="form-control" th:field="*{autoridad}" id="autoridad" name="autoridad">
+					<option th:value="ROLE_MEDICO" th:text="MEDICO"/>
+				</select>
+				</div>
+
+				<div class="form-group" style="display:none;">
+				<label for="habilitado">Habilitado:</label> 
+				<select class="form-control" th:field="*{enable}" id="enable">
+					<option th:value="true" th:text="Habilitado"/>
+				</select>
+				<div class="alert alert-danger" 
+				th:if="${#fields.hasErrors('enable')}"
+				th:errors="*{enable}"></div>
+				</div>
+
+			</div>	
+			<br>
+			<br>	
+			<div class="botones">
+				<button type ="submit" class="btn btn-primary">Registrarte</button>
+				<a href="/login" class="cancelar">Cancelar</a>
+			</div>
+			<br>
+			<br>
+		</form>
+	</div>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<!-- Script para mostrar las coordenadas-->
+	<script type="text/javascript">
+		window.onload = function() {
+			
+			if (navigator.geolocation) { //Validar si hay acceso web a la ubicación
+				navigator.geolocation.getCurrentPosition(function mostrarUbicacion(position){
+					var latitud = position.coords.latitude; //Obtener latitud
+					var longitud = position.coords.longitude; //Obtener longitud
+					var div = document.getElementById("coordenadas");
+					div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
+					var txt = document.getElementById("direccion");
+					txt.value=latitud + "," + longitud;
+				}, function error(positionError){
+					switch (positionError.code)
+					{
+						case positionError.PERMISSION_DENIED:
+							alert("No se ha permitido el acceso a la posición del usuario");
+						break;
+						case positionError.POSITION_UNAVAILABLE:
+							alert("No se ha podido acceder a la información de su posición.");
+						break;
+						case positionError.TIMEOUT:
+							alert("El servicio ha tardado demasiado tiempo en responder.");
+						break;
+						default:
+							alert("Error desconocido.");
+					}
+				});//Obtiene la posición
+			}
+		}
+	</script>	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
