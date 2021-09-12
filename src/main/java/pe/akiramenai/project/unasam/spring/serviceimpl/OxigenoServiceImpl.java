@@ -92,8 +92,11 @@ public class OxigenoServiceImpl implements IOxigenoService{
 		List<Double> listOxigenacion = new ArrayList<Double>();
 		listOxigeno.forEach((oxigeno)->{
 			listOxigenacion.add(oxigeno.getValor());
+			System.out.println(oxigeno.getValor());
 		});
 		
+		listOxigenacion.remove(listOxigenacion.size()-1);
+
 		mathResources calculation = new mathResources();
 		
 		double meanOxigeno = calculation.mean(listOxigenacion);
@@ -103,7 +106,7 @@ public class OxigenoServiceImpl implements IOxigenoService{
 			flag = true;
 		
 		if(listOxigenacion.size()>3) {
-			if (oxigenoActual.getValor()<meanOxigeno-sdOxigeno)
+			if (oxigenoActual.getValor()<meanOxigeno-1.3*sdOxigeno)
 				flag=true;
 		}
 		

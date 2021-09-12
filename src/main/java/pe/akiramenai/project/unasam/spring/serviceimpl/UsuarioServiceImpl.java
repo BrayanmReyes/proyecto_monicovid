@@ -141,37 +141,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		return listaR;
 	}
 	
-	@Override
-	@Transactional
-	public List<Usuario> listarAsesores(){
-		List<Usuario>lista=dUsuario.findAll();
-		List<Usuario>listaR=new ArrayList<Usuario>();
-		for(int i=0;i<lista.size();i++)
-		if(lista.get(i).getRoles().toString().indexOf("ASESOR")>-1)
-			listaR.add(lista.get(i));
 		
-		for(int i=0;i<lista.size();i++)
-			if(lista.get(i).getRoles().toString().indexOf("MIXTO")>-1)
-				listaR.add(lista.get(i));
-		
-		return listaR;
-	}
-	@Override
-	@Transactional
-	public List<Usuario> listarJueces(){
-		List<Usuario>lista=dUsuario.findAll();
-		List<Usuario>listaR=new ArrayList<Usuario>();
-		for(int i=0;i<lista.size();i++)
-		if(lista.get(i).getRoles().toString().indexOf("JUEZ")>-1)
-			listaR.add(lista.get(i));
-		
-		for(int i=0;i<lista.size();i++)
-			if(lista.get(i).getRoles().toString().indexOf("MIXTO")>-1)
-				listaR.add(lista.get(i));
-		
-		return listaR;
-	}
-	
 	@Override
 	@Transactional
 	public List<String> listarCiclos(int anio1, int anio2){
@@ -281,24 +251,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public Usuario obtenerObjetoUsuario() {
 		String userName = this.obtenerUsuario();
 		return this.buscarByCodigo(userName).get(0);
-	}
-
-
-
-	/*--------------------------------------------------------------------------------------*/
-	@Override
-	public List<Usuario> buscarEstudianteDNI(String dni){
-		return dUsuario.buscarEstudianteByDNI(dni, "ROLE_ESTUDIANTE");
-	}
-
-	@Override
-	public List<Usuario> buscarEstudianteApellidos(String apellido) {
-		return dUsuario.buscarEstudianteByApellidos(apellido, "ROLE_ESTUDIANTE");
-	}
-
-	@Override
-	public List<Usuario> buscarEstudianteCodigo(String codigo) {
-		return dUsuario.buscarEstudianteByCodigo(codigo, "ROLE_ESTUDIANTE");
 	}
 
 }

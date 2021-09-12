@@ -108,16 +108,17 @@ public class TemperaturaServiceImpl implements ITemperaturaService{
 			listTemperaturaValor.add(temperatura.getValor());
 		});
 		
+		listTemperaturaValor.remove(listTemperaturaValor.size()-1);
 		mathResources calculation = new mathResources();
 		
 		double meanTemperatura = calculation.mean(listTemperaturaValor);
 		double sdTemperatura = calculation.sd(listTemperaturaValor);
 		Temperatura temperaturaActual = listTemperatura.get(listTemperatura.size()-1);
-		if(temperaturaActual.getValor()>38.5)
+		if(temperaturaActual.getValor()>=38.0)
 			flag = true;
 		
 		if(listTemperaturaValor.size()>3) {
-			if (temperaturaActual.getValor()>meanTemperatura+sdTemperatura)
+			if (temperaturaActual.getValor()>meanTemperatura+1.3*sdTemperatura)
 				flag=true;
 		}
 		return flag;

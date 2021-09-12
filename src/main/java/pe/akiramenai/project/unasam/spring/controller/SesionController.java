@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pe.akiramenai.project.unasam.spring.model.Sesion;
 import pe.akiramenai.project.unasam.spring.model.Usuario;
 import pe.akiramenai.project.unasam.spring.service.ISesionService;
-import pe.akiramenai.project.unasam.spring.service.IUploadPathService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
 
 

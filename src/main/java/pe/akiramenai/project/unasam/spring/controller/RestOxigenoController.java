@@ -38,8 +38,6 @@ public class RestOxigenoController {
 	
 	@RequestMapping("/pacienteBuscado")
 	public String OxigenoPacienteBuscado(Model model) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
 		List<Oxigeno> foo = aService.listarOxigenacionbyUsernameOrdenado(aService.getPacienteBuscado());
 		String json = new Gson().toJson(foo);
 		return json;

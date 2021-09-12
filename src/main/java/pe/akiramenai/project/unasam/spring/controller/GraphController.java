@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pe.akiramenai.project.unasam.spring.service.IReporteService;
 import pe.akiramenai.project.unasam.spring.service.ITemperaturaService;
 import pe.akiramenai.project.unasam.spring.service.IUsuarioService;
-import pe.akiramenai.project.unasam.spring.serviceimpl.TemperaturaServiceImpl;
 import pe.akiramenai.project.unasam.spring.serviceimpl.UsuarioServiceImpl;
 
 

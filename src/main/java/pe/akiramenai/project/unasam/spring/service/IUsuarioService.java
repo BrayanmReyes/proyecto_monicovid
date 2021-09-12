@@ -18,17 +18,12 @@ public interface IUsuarioService {
 		public List<Usuario> buscarEmailUsuario(String email);
 		public String buscarEmail(Long id);
 		public List<Usuario> listarPacientes();
-		public List<Usuario> listarAsesores();
-		public List<Usuario> listarJueces();
 		public List<String> listarCiclos(int anio1, int anio2);
 		public Optional<Usuario>listarCodigo(String codigo);
 		public Usuario getUsuario();
 		public void setUsuario(Usuario usuario);
 		public List<Usuario> buscarByApellidos(String apellido);
 		public List<Usuario> buscarByCodigo(String username);
-		public List<Usuario> buscarEstudianteDNI(String dni);
-		public List<Usuario> buscarEstudianteApellidos(String apellido);
-		public List<Usuario> buscarEstudianteCodigo(String codigo);
 		//Encontrar el usuario por UserName
 		public Usuario buscarPorUserName(String username);
 		public String obtenerUsuario();

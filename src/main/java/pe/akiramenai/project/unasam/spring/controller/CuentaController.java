@@ -257,21 +257,4 @@ public class CuentaController {
 		return "adminListUsuarios";
 	}
 	
-	@GetMapping("/procesoDNIBuscar")
-	public String buscarDNIProceso(@RequestParam("dni") String dni,Map<String, Object> model) {
-		model.put("listaEstudiantes", uService.buscarEstudianteDNI(dni));
-		return "adminListProcesos";
-	}
-	
-	@GetMapping("/procesoCodigoBuscar")
-	public String buscarCodigoProceso(@RequestParam("username") String username,Map<String, Object> model) {
-		model.put("listaEstudiantes", uService.buscarEstudianteCodigo(username.toUpperCase()));
-		return "adminListProcesos";
-	}
-	
-	@GetMapping("/procesoApellidosBuscar")
-	public String buscarApellidoProceso(@RequestParam("apellido") String apellido,Map<String, Object> model) {
-		model.put("listaEstudiantes", uService.buscarEstudianteApellidos(apellido.toUpperCase()));
-		return "adminListProcesos";
-	}
 }
