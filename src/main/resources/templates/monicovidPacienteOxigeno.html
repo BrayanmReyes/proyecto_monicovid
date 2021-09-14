@@ -84,10 +84,10 @@
 					<div align= "center">
 						<div>
 							<div class="fill-area"></div>
-							<label id="range-oxigeno" class="range-value" for="range">84</label>
+							<label id="range-oxigeno" class="range-value" for="range">95</label>
 							<br>
 							 
-							<input id="range" type="range" name="range" th:field="*{valor}" min="84.0" max="100.0" step="0.1" onmousemove="handleMouseMove(this.value)" onchange="handleMouseMove(this.value)" list="tickmarks"/>
+							<input id="range" type="range" name="range" th:field="*{valor}" min="84.0" max="100.0" step="1" onmousemove="handleMouseMove(this.value)" onchange="handleMouseMove(this.value)" list="tickmarks"/>
 							<br>
 							<div id="tickmarks">
 								<p>84</p>

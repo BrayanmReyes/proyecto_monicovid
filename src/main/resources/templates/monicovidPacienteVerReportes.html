@@ -60,9 +60,14 @@
 									</td>
 									<td align="center">
 										<span th:if="${t.sintoma != null}">
-											<a type="button" class="btn btn-success celeste" th:href="@{'/reporte/verReportesSintoma/'+ ${t.id}}"><i class="fas fa-eye"></i>	Ver</a>	
+											<span th:if="${t.sintoma.valor != 'Sin síntomas'}" class="letra-rosa">
+												<a type="button" class="btn btn-success celeste" th:href="@{'/reporte/verReportesSintoma/'+ ${t.id}}"><i class="fas fa-eye"></i>	Ver</a>
+											</span>
+											<span th:unless="${t.sintoma.valor != 'Sin síntomas'}" class="letra-rosa">Sin síntomas</span>
 										</span>
-										<span th:unless="${t.sintoma != null}" class="letra-rosa">No registrado</span>
+										<span th:unless="${t.sintoma != null}" class="letra-rosa">
+											No registrado
+										</span>
 									</td>
 								</tr>
 							</tbody>
@@ -186,8 +191,11 @@
 		$('.oxigeno-valor span').each(function() {
 			var text = $(this).text()
 			if(text!="No registrado"){
-				if(text<92.0)
+				if(text<92.0){
 					$(this).addClass("letra-rosa-bold");
+				}
+				$(this).text($(this).text().slice(0,-2));
+				//console.log($(this).text().slice(0,-2));
 			}
 			
 		});

@@ -66,7 +66,7 @@ public class OxigenoController {
 
 		oxigeno.setFechaRegistro(dateActual);
 		oxigeno.setPaciente(usuario);
-		
+		oxigeno.setValor(95.0);
 		model.addAttribute("oxigeno", oxigeno);
 		model.addAttribute("listaUsuarios", eService.listar());
 		return "monicovidPacienteOxigeno";
