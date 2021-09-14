@@ -118,7 +118,7 @@ public class TemperaturaServiceImpl implements ITemperaturaService{
 			flag = true;
 		
 		if(listTemperaturaValor.size()>3) {
-			if (temperaturaActual.getValor()>meanTemperatura+1.3*sdTemperatura)
+			if (temperaturaActual.getValor()>meanTemperatura+sdTemperatura)
 				flag=true;
 		}
 		return flag;
