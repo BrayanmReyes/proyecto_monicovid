@@ -220,18 +220,11 @@ public class MessageController {
 					else{
 						//Si es negativo la hora Actual es antes de la hora +12h (sí se registró)
 						//formateando fecha
-						SimpleDateFormat formateadorFecha = new SimpleDateFormat("hh:mm aa");
-						SimpleDateFormat formateadorHora = new SimpleDateFormat("'del' dd 'de' MMMM");
-						String mHora = formateadorFecha.format(horaMonitoreoMas8);
-						String meridiano = "";
-						if(mHora.contains("p"))
-							meridiano = " PM";
-						else
-							meridiano = " AM";
-						formateadorFecha = new SimpleDateFormat("hh:mm");
-						mHora = formateadorFecha.format(horaMonitoreoMas8)+ meridiano;
-						String mFecha =  formateadorHora.format(horaMonitoreoMas8);
-						mensajeString = "Hola "+ usuario.getNombre() + ", no olvides realizar tu monitoreo de las " + mHora + " " + mFecha +" si usted no lo ha hecho previamente.";	
+						SimpleDateFormat formateadorHora = new SimpleDateFormat("HH:mm");
+						SimpleDateFormat formateadorFecha = new SimpleDateFormat("'del' dd 'de' MMMM");
+						String mHora = formateadorHora.format(horaMonitoreoMas8);
+						String mFecha =  formateadorFecha.format(horaMonitoreoMas8);
+						mensajeString = "Hola "+ usuario.getNombre() + ", no olvides realizar tu monitoreo de las " + mHora + " horas " + mFecha +" si usted no lo ha hecho previamente.";	
 					}
 					
 				}
@@ -256,20 +249,6 @@ public class MessageController {
 			http.sendSMSMasivo(mensaje, usuario);
 	}
 	
-		@Scheduled(cron = "0 30 6 * 8 *", zone="America/Lima")
-	public void envioAlertaMañanaAgosto() {
-		enviarAlerta();
-	}
-	
-	@Scheduled(cron = "0 30 14 * 8 *", zone="America/Lima")
-	public void envioAlertaTardeAgosto() {
-		enviarAlerta();
-	}
-	
-	@Scheduled(cron = "0 30 22 * 8 *", zone="America/Lima")
-	public void envioAlertaNocheAgosto() {
-		enviarAlerta();
-	}
 	
 	@Scheduled(cron = "0 30 6 * 9 *", zone="America/Lima")
 	public void envioAlertaMañanaSetiembre() {
