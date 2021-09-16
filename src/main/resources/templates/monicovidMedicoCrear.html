@@ -88,10 +88,16 @@
 				<div class="form-group">
 					<label for="confirmPassword">Confirmar Contraseña:</label> 
 					<input type="password"	th:field="*{confirmPassword}"
-					class="form-control" id="confirmPassword"></input>
+					class="form-control" id="confirmPassword" oninput="check()"></input>
 					<div class="alert alert-danger" 
 					th:if="${#fields.hasErrors('confirmPassword')}"
 					th:errors="*{confirmPassword}"></div>
+				</div>
+				<div class="alert alert-warning alert-dismissible fade show modificar-pwd no-coincide-pwd" role="alert" style="opacity:1;"> 
+					<strong>Las contraseñas no coinciden</strong> 
+				</div>
+				<div class="alert alert-success alert-dismissible fade show modificar-pwd coincide-pwd" role="alert" style="opacity:1;"> 
+					<strong>Las contraseñas coinciden</strong> 
 				</div>
 				<br>
 				<div class="form-group" style="display:none;">
@@ -160,6 +166,27 @@
 							alert("Error desconocido.");
 					}
 				});//Obtiene la posición
+			}
+			$(".no-coincide-pwd").hide();
+			$(".coincide-pwd").hide();
+		}
+	</script>	
+	<script>
+		function matchPassword(){
+			var pas1 = $("#password").val();
+			var pas2 = $("#confirmPassword").val();
+			return (pas1 === pas2);
+    	}
+		function check(){
+			if(!matchPassword()){
+				$(".no-coincide-pwd").show();
+				$(".coincide-pwd").hide();
+				$("#btn-registrar").prop('disabled', true);
+			}
+			else{
+				$("#btn-registrar").prop('disabled', false);
+				$(".no-coincide-pwd").hide();
+				$(".coincide-pwd").show();
 			}
 		}
 	</script>	
