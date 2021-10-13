@@ -99,6 +99,33 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
               </div>
             </div>
           </div>
+		  <br>
+		  <br>
+		  <div class="recomendaciones-generales">
+			<h3 class="letra-rosa">Añadir médico de confianza</h3>
+			<br>
+			<div class="seccion letra-celeste">
+				<h4>¿Deseas añadir un médico de confianza?</h4>
+				<br>
+				<p>Da click al botón para obtener el enlace para registrar al médico:</p>
+				<div style="display: none;">
+					<p id="link-medico">https://monico19.site/cuenta/ir-Medico-Registrar</p>
+				</div>
+				<div class="botones btn-enlace">
+					<button class="btn btn-primary btn-md left-block" onclick="copiarAlPortapapeles('link-medico')">
+						<span class="glyphicon glyphicon-plus">Obtener enlace</span>
+					</button>
+				</div>
+				
+				<br>
+				<p>En su defecto, escanea el siguiente código QR:</p>
+				<div class="qr-container">
+					
+					<img class="img-qr" src="https://cdn.discordapp.com/attachments/824349011888308295/897668420349349928/033aa096-33fb-4afa-82d7-ff8c7c9786a6.png" alt="qr-medico">
+					
+				</div>
+			</div>
+		  </div>
 	</div>	
 	<div th:replace="fragments/monicovidFooter :: footer"></div>
 	<script>
@@ -108,6 +135,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			
 			if(recuperado!="" && recuperado!=null)
 				$("#btn-recuperado").attr('disabled', 'disabled');
+		}
+	</script>
+	<script text="javascript">
+		function copiarAlPortapapeles(id_elemento) {
+			var aux = document.createElement("input");
+			aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+			document.body.appendChild(aux);
+			aux.select();
+			document.execCommand("copy");
+			document.body.removeChild(aux);
 		}
 	</script>	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

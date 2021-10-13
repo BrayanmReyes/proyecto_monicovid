@@ -169,7 +169,12 @@
 				<div class="alert alert-danger" 
 				th:if="${#fields.hasErrors('recuperado')}"
 				th:errors="*{recuperado}"></div>
-			</div>	
+			</div>
+
+			<br>
+			<div class="mensaje-politicas">
+				Al hacer clic en "Registrarte", aceptas nuestras <a href="https://drive.google.com/file/d/1ewCktv0WfQ4AWVWCZ1prdbngQ_LzQ-aY/view?usp=sharing" target="_blank">Condiciones</a> y la <a href="https://drive.google.com/file/d/1ayWW3Z3PQnBM1TdeqdhYYzV55bCti21N/view?usp=sharing" target="_blank">Política de datos</a>. Es posible que te enviemos notificaciones por SMS, que puedes desactivar cuando quieras.
+			</div>
 			<br>
 			<div class="botones">
 				<button type ="submit" id="btn-registrar" class="btn btn-primary">Registrarte</button>

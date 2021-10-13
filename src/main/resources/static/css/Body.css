@@ -910,3 +910,44 @@ main {
     width: 100%;
     height: 100%;
 } 
+
+/*Código QR*/
+.qr-container{
+    display: flex;
+    justify-content: center;
+}
+.img-qr{
+    width: 80%;
+}
+
+@media (min-width: 268px)
+{
+    .img-qr{
+        width: 75%;
+    }
+}
+
+@media (min-width: 768px)
+{
+    .img-qr{
+        width: 55%;
+    }
+}
+@media (min-width: 992px)
+{
+    .img-qr{
+        width: 35%;
+    }
+}
+
+/*boton enlace*/
+.btn-enlace{
+    justify-content: flex-start;
+}
+
+
+@media (max-width: 575px){
+    .btn-enlace{
+        justify-content: flex-start;
+    }
+}

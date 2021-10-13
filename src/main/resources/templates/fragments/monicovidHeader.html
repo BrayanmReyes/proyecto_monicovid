@@ -87,13 +87,21 @@
 										<span><i class="fas fa-user"></i><span class="nav-invisibles">	CUENTA</span></span>
 										</a>
 										<div class="dropdown-menu">
+											<form id="changePassword" th:action="@{/sesion/irModificarContrasenia}" method="post">
+												<button class="dropdown-item dropdown-item-formato" type="submit">Cambiar Contraseña
+												</button>
+											</form>
+											<form id="condiciones" action="https://drive.google.com/file/d/1ewCktv0WfQ4AWVWCZ1prdbngQ_LzQ-aY/view?usp=sharing" method="GET" target="_blank">
+												<button class="dropdown-item dropdown-item-formato" type="submit">Condiciones
+												</button>
+											</form>
+											<form id="politicas" action="https://drive.google.com/file/d/1ayWW3Z3PQnBM1TdeqdhYYzV55bCti21N/view?usp=sharing" method="GET" target="_blank">
+												<button class="dropdown-item dropdown-item-formato" type="submit">Política de datos
+												</button>
+											</form>
 											<form id="logoutForm" th:action="@{/logout}" method="post">
 												<button class="dropdown-item dropdown-item-formato" onclick="document.getElementById('logoutForm').submit();"
 													type="submit">Cerrar Sesión
-												</button>
-											</form>
-											<form id="changePassword" th:action="@{/sesion/irModificarContrasenia}" method="post">
-												<button class="dropdown-item dropdown-item-formato" type="submit">Cambiar Contraseña
 												</button>
 											</form>
 										</div>
